@@ -1,24 +1,9 @@
 
 // Declare module.
-var ngComboDatePicker = angular.module("ngComboDatePicker", []);
-
-ngComboDatePicker.directive('ngSparkline', function() {
-    return {
-        restrict: 'AEC',
-        scope: {
-            ngModel: '=ngModel'
-        },
-        template: '<div class="sparkline"><h4>Weather for {{ngModel}}</h4></div>'
-    }
-});
-
-// TODO:
-// - Probar los parametros con @ usando strings y variables del $scope padre.
-// - Probar con diferentes fechas minimas y maximas (y los valores por defecto).
-// - Probar con diferentes meses (usando strings y arrays).
+angular.module("ngComboDatePicker", [])
 
 // Create directive.
-ngComboDatePicker.directive('ngComboDatePicker', function() {
+.directive('ngComboDatePicker', function() {
     return {
         restrict: 'AEC',
         scope: {
@@ -31,7 +16,7 @@ ngComboDatePicker.directive('ngComboDatePicker', function() {
         },
         controller: function($scope) {
             // Define function for parse dates.
-            $scope.parseDate = function(myDate) {
+            function parseDate(myDate) {
                 var res = null;
                 if(myDate !== undefined && myDate !== null) {
                     if(myDate instanceof Date) {
@@ -46,18 +31,31 @@ ngComboDatePicker.directive('ngComboDatePicker', function() {
             };
 
             // Initialize model.
-            $scope.ngModel = $scope.parseDate($scope.ngModel);
+            $scope.ngModel = parseDate($scope.ngModel);
             if($scope.ngModel == null) $scope.ngModel = new Date();
 
             // Verify if initial date was defined.
-            var initDate = $scope.parseDate($scope.ngDate);
+            var initDate = parseDate($scope.ngDate);
             if(initDate != null) $scope.ngModel = initDate;
 
+            // Initialize order.
+            if(typeof $scope.ngOrder != 'string') {
+                $scope.ngOrder = 'dmy';
+            } else {
+                $scope.ngOrder = $scope.ngOrder.toLowerCase();
+            }
+
             // Initialize minimal and maximum values.
-            $scope.minDate = $scope.parseDate($scope.ngMinDate);
-            if($scope.ngMinDate == null) { var now = new Date(); $scope.minDate = new Date(now.getFullYear()-100, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()); }
-            $scope.maxDate = $scope.parseDate($scope.ngMaxDate);
-            if($scope.maxDate == null) $scope.maxDate = new Date();
+            $scope.minDate = parseDate($scope.ngMinDate);
+            if($scope.ngMinDate == null) {
+                var now = new Date();
+                $scope.minDate = new Date(now.getFullYear()-100, now.getMonth(), now.getDate(),
+                                          now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+            }
+            $scope.maxDate = parseDate($scope.ngMaxDate);
+            if($scope.maxDate == null) {
+                $scope.maxDate = new Date();
+            }
 
             // Verify if selected date is in the valid range.
             if($scope.ngModel < $scope.minDate) $scope.ngModel = $scope.minDate;
@@ -124,7 +122,7 @@ ngComboDatePicker.directive('ngComboDatePicker', function() {
             };
 
 
-            // When the model is updated, validate is value and update the combo boxes.
+            // When the model is updated, update the combo boxes.
             $scope.modelUpdated = function() {
                 // Update combo boxes.
                 $scope.date = $scope.ngModel.getDate();
@@ -135,15 +133,16 @@ ngComboDatePicker.directive('ngComboDatePicker', function() {
                 $scope.updateMonthList();
                 $scope.updateDateList();
             }
-            // List for changes in the model.
+            // Watch for changes in the model.
             $scope.$watch('ngModel', function() {
                 $scope.modelUpdated();
             });
 
-            // When a combo box is updated, update the model and verify which values in the combo boxes for dates and months can be show.
+            // When a combo box is changed, update the model and verify which values in the combo boxes for dates and months can be show.
             $scope.onChange = function(part) {
                 // Update model.
-                $scope.ngModel = new Date($scope.year, $scope.month, $scope.date, $scope.ngModel.getHours(), $scope.ngModel.getMinutes(), $scope.ngModel.getSeconds(), $scope.ngModel.getMilliseconds());
+                $scope.ngModel = new Date($scope.year, $scope.month, $scope.date,
+                                          $scope.ngModel.getHours(), $scope.ngModel.getMinutes(), $scope.ngModel.getSeconds(), $scope.ngModel.getMilliseconds());
 
                 // Hide or show days and months according to the min and max dates.
                 $scope.updateMonthList();
@@ -151,12 +150,25 @@ ngComboDatePicker.directive('ngComboDatePicker', function() {
             };
 
         },
+        link: function(scope, element, attrs) {
+            // Initialize variables.
+            var jqLite = angular.element;
+            var children = jqLite(element[0]).children();
+            var order = scope.ngOrder.split('');
+
+            // Reorder elements.
+            for(var i=0; i<order.length; i++) {
+                if(order[i] == 'd') jqLite(element[0]).append(children[0]);
+                if(order[i] == 'm') jqLite(element[0]).append(children[1]);
+                if(order[i] == 'y') jqLite(element[0]).append(children[2]);
+            }
+        },
         template: function() {
-            var html = '<span>Hola {{ngModel}}</span>';
-// TODO: mostrar segun el orden.
-            html += '<select ng-model="date" ng-change="onChange(\'date\')" ng-options="date for date in dates"></select>';
-            html += '<select ng-model="month" ng-change="onChange(\'month\')" ng-options="month.index as month.name for month in months"></select>';
-            html += '<select ng-model="year" ng-change="onChange(\'year\')" ng-options="year for year in years"></select>';
+            var html =
+                '<select ng-model="date" ng-change="onChange(\'date\')" ng-options="date for date in dates"></select>' +
+                '<select ng-model="month" ng-change="onChange(\'month\')" ng-options="month.index as month.name for month in months"></select>' +
+                '<select ng-model="year" ng-change="onChange(\'year\')" ng-options="year for year in years"></select>'
+            ;
 
             return html;
         }

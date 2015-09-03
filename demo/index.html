@@ -6,9 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<script type="text/javascript" src="angular.min.js"></script>
+		<script type="text/javascript" src="moment.min.js"></script>
         <script type="text/javascript" src="../source/ngComboDatePicker.js"></script>
 
         <script type="text/javascript">
+
+// TODO:
+// - Probar los parametros con @ usando strings y variables del $scope padre.
+// - Probar con diferentes fechas minimas y maximas (y los valores por defecto).
+// - Probar con diferentes meses (usando strings y arrays).
+
             var app = angular.module('myApp',['ngComboDatePicker']);
 
             app.controller('myCtrl', function ($scope) {
@@ -22,16 +29,17 @@
         <div ng-controller="myCtrl">
             {{ name }}
             <div>---</div>
-            <ng-combo-date-picker ng-model="fecha" ng-order="mdy" ng-min="name" ng-max="mdy"></ng-combo-date-picker>
+            <span>Hola {{fecha}}</span> <ng-combo-date-picker ng-model="fecha" ng-order="mdy"></ng-combo-date-picker>
             <div>---</div>
-            <ng-combo-date-picker ng-model="algo" ng-date="2001-02-05" ></ng-combo-date-picker>
+            <span>Hola {{algo}}</span> <span ng-combo-date-picker ng-model="algo" ng-date="2001-02-05" ></span>
             <div>---</div>
-            <ng-combo-date-picker ng-model="fecha" ng-order="ymd" ng-months="Ene,Feb,Mar,Abr,May,Jun,Jul,Ago,Sep,Oct,Nov,Dic"></ng-combo-date-picker>
+            <span>Hola {{fecha}}</span> <ng-combo-date-picker ng-model="fecha" ng-order="ymd" ng-months="Ene,Feb,Mar,Abr,May,Jun,Jul,Ago,Sep,Oct,Nov,Dic"></ng-combo-date-picker>
             <div>---</div>
-            <div ng-sparkline ng-model="city"></div>
-            <ng-sparkline ng-model="city"></ng-sparkline>
-            <span ng-sparkline="exp" ng-model="city"></span>
-            <span class="ng-sparkline: exp;" ng-model="city"></span>
+            <div ng-repeat="a in [1,2,3]">
+                <div ng-if="a == 1">Hola</div>
+                <div ng-if="a == 2">Que tal</div>
+                <div ng-if="a == 3">Chau</div>
+            </div>
         </div>
     </body>
 </html>
