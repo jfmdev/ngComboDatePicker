@@ -1,3 +1,9 @@
+/*
+ * ngComboDatePicker v1.0.0
+ * http://github.com/jfmdev/ngComboDatePicker
+ * «Copyright 2015 Jose F. Maldonado»
+ * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
+ */
 
 // Declare module.
 angular.module("ngComboDatePicker", [])
@@ -30,6 +36,18 @@ angular.module("ngComboDatePicker", [])
                 return res;
             };
 
+            // Define fuction for getting the maximum date for a month.
+            function maxDate(month, year) {
+                var res = 31;
+                if(month == 4 || month == 6 || month == 9 || month == 11) {
+                    res = 30;
+                }
+                if(month == 2) {
+                    res = year % 4 == 0 && year % 100 != 0? 29 : 28;
+                }
+                return res;
+            }
+
             // Initialize model.
             $scope.ngModel = parseDate($scope.ngModel);
             if($scope.ngModel == null) $scope.ngModel = new Date();
@@ -59,7 +77,7 @@ angular.module("ngComboDatePicker", [])
 
             // Verify if selected date is in the valid range.
             if($scope.ngModel < $scope.minDate) $scope.ngModel = $scope.minDate;
-            if($scope.ngModel < $scope.maxDate) $scope.ngModel = $scope.maxDate;
+            if($scope.ngModel > $scope.maxDate) $scope.ngModel = $scope.maxDate;
 
             // Initialize list of years.
             $scope.years = [];
@@ -101,17 +119,9 @@ angular.module("ngComboDatePicker", [])
                 }
 
                 // End date is 30 or 31 (28 or 29 in February), unless the selected month and year matchs the maximum date.
-                var end = 31;
+                var end = maxDate($scope.ngModel.getMonth()+1, $scope.ngModel.getFullYear());
                 if($scope.ngModel.getMonth() == $scope.maxDate.getMonth() && $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()) {
                     end = $scope.maxDate.getDate();
-                } else {
-                    var month = $scope.ngModel.getMonth() + 1;
-                    if(month == 4 || month == 6 || month == 9 || month == 11) {
-                        end = 30;
-                    }
-                    if(month == 2) {
-                        end = $scope.ngModel.getFullYear() % 4 == 0 && $scope.ngModel.getFullYear() % 100 != 0? 29 : 28;
-                    }
                 }
 
                 // Generate list.
@@ -141,7 +151,8 @@ angular.module("ngComboDatePicker", [])
             // When a combo box is changed, update the model and verify which values in the combo boxes for dates and months can be show.
             $scope.onChange = function(part) {
                 // Update model.
-                $scope.ngModel = new Date($scope.year, $scope.month, $scope.date,
+                var maxDay = maxDate($scope.month+1, $scope.year);
+                $scope.ngModel = new Date($scope.year, $scope.month, $scope.date > maxDay? maxDay : $scope.date,
                                           $scope.ngModel.getHours(), $scope.ngModel.getMinutes(), $scope.ngModel.getSeconds(), $scope.ngModel.getMilliseconds());
 
                 // Hide or show days and months according to the min and max dates.

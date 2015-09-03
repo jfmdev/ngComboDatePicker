@@ -6,40 +6,39 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<script type="text/javascript" src="angular.min.js"></script>
-		<script type="text/javascript" src="moment.min.js"></script>
         <script type="text/javascript" src="../source/ngComboDatePicker.js"></script>
 
         <script type="text/javascript">
-
-// TODO:
-// - Probar los parametros con @ usando strings y variables del $scope padre.
-// - Probar con diferentes fechas minimas y maximas (y los valores por defecto).
-// - Probar con diferentes meses (usando strings y arrays).
-
             var app = angular.module('myApp',['ngComboDatePicker']);
 
             app.controller('myCtrl', function ($scope) {
-                $scope.name = 'Superhero';
-                $scope.city = 'Alla';
-                $scope.fecha = new Date();
+
             });
         </script>
     </head>
     <body ng-app="myApp">
+        <h1>ngComboDatePicker demos</h1>
+
         <div ng-controller="myCtrl">
-            {{ name }}
-            <div>---</div>
-            <span>Hola {{fecha}}</span> <ng-combo-date-picker ng-model="fecha" ng-order="mdy"></ng-combo-date-picker>
-            <div>---</div>
-            <span>Hola {{algo}}</span> <span ng-combo-date-picker ng-model="algo" ng-date="2001-02-05" ></span>
-            <div>---</div>
-            <span>Hola {{fecha}}</span> <ng-combo-date-picker ng-model="fecha" ng-order="ymd" ng-months="Ene,Feb,Mar,Abr,May,Jun,Jul,Ago,Sep,Oct,Nov,Dic"></ng-combo-date-picker>
-            <div>---</div>
-            <div ng-repeat="a in [1,2,3]">
-                <div ng-if="a == 1">Hola</div>
-                <div ng-if="a == 2">Que tal</div>
-                <div ng-if="a == 3">Chau</div>
-            </div>
+            <h2>Basic example</h2>
+            <p>Choose a date: <ng-combo-date-picker ng-model="basic"></ng-combo-date-picker></p>
+            <p>Current selection is: <strong>{{ basic }}</strong>
+
+            <h2>Change order of combo boxes</h2>
+            <p>Choose a date: <ng-combo-date-picker ng-model="change" ng-order="ymd"></ng-combo-date-picker></p>
+            <p>Current selection is: <strong>{{ change }}</strong>
+
+            <h2>Set initial date</h2>
+            <p>Choose a date: <ng-combo-date-picker ng-model="initial" ng-date="1956-07-10"></ng-combo-date-picker></p>
+            <p>Current selection is: <strong>{{ initial }}</strong>
+
+            <h2>Define minimum and maximum dates</h2>
+            <p>Choose a date: <ng-combo-date-picker ng-model="range" ng-min-date="1800-01-01" ng-max-date="1900-12-31"></ng-combo-date-picker></p>
+            <p>Current selection is: <strong>{{ range }}</strong>
+
+            <h2>Change strings for months</h2>
+            <p>Choose a date: <ng-combo-date-picker ng-model="names" ng-months="Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre"></ng-combo-date-picker></p>
+            <p>Current selection is: <strong>{{ names }}</strong>
         </div>
     </body>
 </html>
