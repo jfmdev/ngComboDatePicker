@@ -22,7 +22,11 @@
         <div ng-controller="myCtrl">
             {{ name }}
             <div>---</div>
-            <ng-combo-date-picker ng-model="fecha" ng-order="mdy" ng-min="name" ng-max="'mdy'"></ng-combo-date-picker>
+            <ng-combo-date-picker ng-model="fecha" ng-order="mdy" ng-min="name" ng-max="mdy"></ng-combo-date-picker>
+            <div>---</div>
+            <ng-combo-date-picker ng-model="algo" ng-date="2001-02-05" ></ng-combo-date-picker>
+            <div>---</div>
+            <ng-combo-date-picker ng-model="fecha" ng-order="ymd" ng-months="Ene,Feb,Mar,Abr,May,Jun,Jul,Ago,Sep,Oct,Nov,Dic"></ng-combo-date-picker>
             <div>---</div>
             <div ng-sparkline ng-model="city"></div>
             <ng-sparkline ng-model="city"></ng-sparkline>
