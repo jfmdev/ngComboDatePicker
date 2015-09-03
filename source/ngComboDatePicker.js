@@ -69,52 +69,93 @@ ngComboDatePicker.directive('ngComboDatePicker', function() {
                 $scope.years.push(i);
             }
 
+            // Initialize list of months names.
+            var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                if($scope.ngMonths !== undefined && $scope.ngMonths !== null) {
+                    if(typeof $scope.ngMonths == 'string') {
+                        var months = $scope.ngMonths.split(',');
+                        if(months.length == 12) monthNames = months;
+                    }
+                    if(Array.isArray($scope.ngMonths) && $scope.ngMonths.length == 12) {
+                         monthNames = $scope.ngMonths;
+                    }
+                }
+
             // Initialize list of months.
-            $scope.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            if($scope.ngMonths !== undefined && $scope.ngMonths !== null) {
-                if(typeof $scope.ngMonths == 'string') {
-                    var months = $scope.ngMonths.split(',');
-                    if(months.length == 12) $scope.months = months;
+            $scope.updateMonthList = function() {
+                // Some months can not be choosed if the year matchs with the year of the minimum or maximum dates.
+                var start = $scope.ngModel.getFullYear() == $scope.minDate.getFullYear()? $scope.minDate.getMonth() : 0;
+                var end = $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()? $scope.maxDate.getMonth() : 11;
+
+                // Generate list.
+                $scope.months = [];
+                for(var i=start; i<=end; i++) {
+                    $scope.months.push({index:i, name:monthNames[i]});
                 }
-                if(Array.isArray($scope.ngMonths) && $scope.ngMonths.length == 12) {
-                     $scope.months = $scope.ngMonths;
-                }
-            }
+            };
 
             // Initialize list of days.
-            $scope.dates = [];
-            for(var i=1; i<=31; i++) {
-                $scope.dates.push(i);
-            }
+            $scope.updateDateList = function() {
+                // Start date is 1, unless the selected month and year matchs the minimum date.
+                var start = 1;
+                if($scope.ngModel.getMonth() == $scope.minDate.getMonth() && $scope.ngModel.getFullYear() == $scope.minDate.getFullYear()) {
+                    start = $scope.minDate.getDate();
+                }
+
+                // End date is 30 or 31 (28 or 29 in February), unless the selected month and year matchs the maximum date.
+                var end = 31;
+                if($scope.ngModel.getMonth() == $scope.maxDate.getMonth() && $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()) {
+                    end = $scope.maxDate.getDate();
+                } else {
+                    var month = $scope.ngModel.getMonth() + 1;
+                    if(month == 4 || month == 6 || month == 9 || month == 11) {
+                        end = 30;
+                    }
+                    if(month == 2) {
+                        end = $scope.ngModel.getFullYear() % 4 == 0 && $scope.ngModel.getFullYear() % 100 != 0? 29 : 28;
+                    }
+                }
+
+                // Generate list.
+                $scope.dates = [];
+                for(var i=start; i<=end; i++) {
+                    $scope.dates.push(i);
+                }
+            };
+
 
             // When the model is updated, validate is value and update the combo boxes.
             $scope.modelUpdated = function() {
                 // Update combo boxes.
                 $scope.date = $scope.ngModel.getDate();
-                $scope.month = $scope.ngModel.getMonth()+'';
+                $scope.month = $scope.ngModel.getMonth();
                 $scope.year = $scope.ngModel.getFullYear();
+
+                // Hide or show days and months according to the min and max dates.
+                $scope.updateMonthList();
+                $scope.updateDateList();
             }
             // List for changes in the model.
             $scope.$watch('ngModel', function() {
-                console.log("hola " + $scope.ngOrder);
                 $scope.modelUpdated();
             });
-            //$scope.modelUpdated();
 
+            // When a combo box is updated, update the model and verify which values in the combo boxes for dates and months can be show.
             $scope.onChange = function(part) {
                 // Update model.
                 $scope.ngModel = new Date($scope.year, $scope.month, $scope.date, $scope.ngModel.getHours(), $scope.ngModel.getMinutes(), $scope.ngModel.getSeconds(), $scope.ngModel.getMilliseconds());
 
-// TODO: Verify if the list of months or dates must be modified.
-                console.log(part);
+                // Hide or show days and months according to the min and max dates.
+                $scope.updateMonthList();
+                $scope.updateDateList();
             };
 
         },
         template: function() {
-            var html = '<span>Hola {{ngModel}}-{{ngOrder}}-{{ngMin}}-{{ngMax}}</span>';
+            var html = '<span>Hola {{ngModel}}</span>';
 // TODO: mostrar segun el orden.
             html += '<select ng-model="date" ng-change="onChange(\'date\')" ng-options="date for date in dates"></select>';
-            html += '<select ng-model="month" ng-change="onChange(\'month\')" ng-options="idx as month for (idx, month) in months"></select>';
+            html += '<select ng-model="month" ng-change="onChange(\'month\')" ng-options="month.index as month.name for month in months"></select>';
             html += '<select ng-model="year" ng-change="onChange(\'year\')" ng-options="year for year in years"></select>';
 
             return html;
