@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ngComboDatePicker demo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<script type="text/javascript" src="angular.min.js"></script>
+        <script type="text/javascript" src="../source/ngComboDatePicker.js"></script>
+
+        <script type="text/javascript">
+            var app = angular.module('myApp',['ngComboDatePicker']);
+
+            app.controller('myCtrl', function ($scope) {
+                $scope.name = 'Superhero';
+                $scope.city = 'Alla';
+                $scope.fecha = new Date();
+            });
+        </script>
+    </head>
+    <body ng-app="myApp">
+        <div ng-controller="myCtrl">
+            {{ name }}
+            <div>---</div>
+            <ng-combo-date-picker ng-model="fecha" ng-order="mdy" ng-min="name" ng-max="'mdy'"></ng-combo-date-picker>
+            <div>---</div>
+            <div ng-sparkline ng-model="city"></div>
+            <ng-sparkline ng-model="city"></ng-sparkline>
+            <span ng-sparkline="exp" ng-model="city"></span>
+            <span class="ng-sparkline: exp;" ng-model="city"></span>
+        </div>
+    </body>
+</html>
