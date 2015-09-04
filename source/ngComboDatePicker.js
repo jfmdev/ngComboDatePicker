@@ -20,7 +20,7 @@ angular.module("ngComboDatePicker", [])
             ngMonths : '@',
             ngOrder: '@'
         },
-        controller: function($scope) {
+        controller: ['$scope', function($scope) {
             // Define function for parse dates.
             function parseDate(myDate) {
                 var res = null;
@@ -160,7 +160,7 @@ angular.module("ngComboDatePicker", [])
                 $scope.updateDateList();
             };
 
-        },
+        } ],
         link: function(scope, element, attrs) {
             // Initialize variables.
             var jqLite = angular.element;
