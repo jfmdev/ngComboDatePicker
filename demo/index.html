@@ -29,8 +29,22 @@
             <p>Current selection is: <strong>{{ change }}</strong>
 
             <h2>Set initial date</h2>
+
+            <h3>To fixed value</h3>
             <p>Choose a date: <ng-combo-date-picker ng-model="initial" ng-date="1956-07-10"></ng-combo-date-picker></p>
             <p>Current selection is: <strong>{{ initial }}</strong>
+
+            <h3>To dinamic value</h3>
+            <script type="text/javascript">
+                app.controller('initialDynCtrl', function ($scope) {
+                    var now = new Date();
+                    $scope.init = new Date(now.getTime() + 365*24*60*60*1000);
+                });
+            </script>
+            <div ng-controller="initialDynCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="initial2" ng-date="{{ init.toString() }}"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ initial2 }}</strong>
+            </div>
 
             <h2>Define minimum and maximum dates</h2>
             <p>Choose a date: <ng-combo-date-picker ng-model="range" ng-min-date="1800-01-01" ng-max-date="1900-12-31"></ng-combo-date-picker></p>

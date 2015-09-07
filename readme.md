@@ -12,7 +12,7 @@ Usage
 
 In order to use this directive:
 
-**1)** Include the library (located in the `source` folder) in your HTML file:
+**1)** Include the library (located in the `source` folder) in the header of your HTML files:
 
 ```html
 <script type="text/javascript" src="angular.min.js"></script>
@@ -25,7 +25,7 @@ In order to use this directive:
 var app = angular.module('myApp',['ngComboDatePicker']);
 ```
 
-**3)** Then include the directive in your HTML file. For example:
+**3)** Then include the directive in your HTML code. For example:
 
 ```html
 <ng-combo-date-picker ng-model="myDate"></ng-combo-date-picker>
