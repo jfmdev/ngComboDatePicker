@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ngComboDatePicker - An Angular directive to select dates using combo boxes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="img/calendar.ico" />
+
+		<script type="text/javascript" src="libs/angular.min.js"></script>
+        <script type="text/javascript" src="libs/ngComboDatePicker.min.js"></script>
+
+        <script type="text/javascript" src="libs/jquery.min.js"></script>
+        <script type="text/javascript" src="libs/moment.min.js"></script>
+
+        <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="bootstrap/bootstrap-theme.min.css" />
+		<script type="text/javascript" src="bootstrap/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="highlight/styles/github.css" />
+        <script type="text/javascript" src="highlight/highlight.pack.js"></script>
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+        <style type="text/css">
+            pre {
+                padding: 0;
+            }
+
+            h2 {
+                margin-top: 10px;
+            }
+
+            div.demo {
+                padding: 6px;
+            }
+
+            pre.friendly {
+                margin-bottom: 3px;
+            }
+        </style>
+        <script type="text/javascript">
+            var app = angular.module('myApp',['ngComboDatePicker']);
+
+            app.controller('myCtrl', function ($scope) {
+
+
+            });
+        </script>
+    </head>
+    <body ng-app="myApp">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">ngComboDatePicker</a>
+                </div>
+            </div>
+        </nav>
+
+        <div ng-controller="myCtrl" class="container">
+            <div class="row">
+                <h2>Introduction</h2>
+
+                <p><strong>ngComboDatePicker</strong> is an Angular directive to select dates using combo boxes.
+                In order to use this directive you must:</p>
+
+                <p><strong>1)</strong> Include the <a href="https://github.com/jfmdev/ngComboDatePicker" target="_blank">library</a> (after including Angular) in the header of your HTML files.</p>
+
+                <pre><code class="html">&lt;script type=&quot;text/javascript&quot; src=&quot;angular.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;ngComboDatePicker.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+                <p><strong>2)</strong> Add <em>ngComboDatePicker</em> as a dependency when declaring your Angular's app</p>
+
+                <pre><code class="javascript">var app = angular.module('myApp',['ngComboDatePicker']);</code></pre>
+
+                <p><strong>3)</strong> Add the directive in your HTML code.</p>
+
+                <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;myDate&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+            </div>
+
+            <div class="row">
+                <h2>Examples</h2>
+
+
+                <h3>Basic usage</h3>
+
+                <p>The simpliest usage of the directive is to declare it using only the <code>ng-model</code> attribute.
+                This attribute is mandatory, and it's used to store the date selected by the user.</p>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;basic&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="basic"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+
+                <h3>Set initial value</h3>
+
+                <p>By default, the directive takes the current date as the initial date. However this can be changed by either
+                    initializing the variable assigned to <code>ng-model</code> or to using the attribute <code>ng-date</code>.</p>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre class="friendly"><code class="javascript">$scope.set = new Date('2012-08-03');</code></pre>
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;set&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <script type="text/javascript">
+                        app.controller('myCtrlInit1', function ($scope) {
+                            $scope.set = new Date('2012-08-03');
+                        });
+                    </script>
+                    <div class="col-sm-4 demo" ng-controller="myCtrlInit1">
+                        <ng-combo-date-picker ng-model="set"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;set2&quot; ng-date=&quot;2013-09-04&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="set2" ng-date="2013-09-04"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre class="friendly"><code class="javascript">$scope.init = new Date('2014-10-05');</code></pre>
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;set3&quot; ng-date=&quot;{{ var='{'+'{ init.toString() }'+'}'; }}&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <script type="text/javascript">
+                        app.controller('myCtrlInit3', function ($scope) {
+                            $scope.init = new Date('2014-10-05');
+                        });
+                    </script>
+                    <div class="col-sm-4 demo" ng-controller="myCtrlInit3">
+                        <ng-combo-date-picker ng-model="set3" ng-date="{{ init.toString() }}"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+                <h3>Change order of combo boxes</h3>
+
+                <p>By default, the directive first shows the combo box for the day, then combo box for the month and finally the one for the year.
+                However this can be changed by using the attribute <code>ng-order</code>.</p>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;change1&quot; ng-order=&quot;ymd&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="change1" ng-order="ymd"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;change2&quot; ng-order=&quot;mdy&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="change2" ng-order="mdy"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;change3&quot; ng-order=&quot;dmy&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="change3" ng-order="dmy"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+                <h3>Define minimum and maximum dates</h3>
+
+                <p>By default, the directive let to choose any date in the last 100 years. However this can be changed by using the attributes
+                <code>ng-max-date</code> and <code>ng-min-date</code>.
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;range&quot; ng-min-date=&quot;1800-01-01&quot; ng-max-date=&quot;1900-12-31&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="range" ng-min-date="1800-01-01" ng-max-date="1900-12-31"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre class="friendly"><code class="javascript">$scope.min = new Date('2014-09-07');
+$scope.max = new Date('2016-09-07');</code></pre>
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;range2&quot; ng-min-date=&quot;{{ var='{'+'{ min.toString() }'+'}'; }}&quot; ng-max-date=&quot;{{ var='{'+'{ max.toString() }'+'}'; }}&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <script type="text/javascript">
+                        app.controller('myCtrlRange2', function ($scope) {
+                            $scope.min = new Date('2014-09-07');
+                            $scope.max = new Date('2016-09-07');
+                        });
+                    </script>
+                    <div class="col-sm-4 demo" ng-controller="myCtrlRange2">
+                        <ng-combo-date-picker ng-model="range2" ng-min-date="{{ min.toString() }}" ng-max-date="{{ max.toString() }}"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+
+                <h3>Change strings for months</h3>
+
+                <p>By default, the combo box for the month is filled with the first three caracters of the name of the months in English. However, the values of the combo box can be customized by using the attribute <code>ng-months</code>.</p>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;namesEs&quot; ng-months=&quot;Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="namesEs" ng-months="Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre"></ng-combo-date-picker>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre class="friendly"><code class="javascript">$scope.names = "Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre";</code></pre>
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;namesFr&quot; ng-months=&quot;{{ var='{'+'{ names }'+'}'; }}&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <script type="text/javascript">
+                        app.controller('myCtrlNames2', function ($scope) {
+                            $scope.names = "Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre";
+                        });
+                    </script>
+                    <div class="col-sm-4 demo" ng-controller="myCtrlNames2">
+                        <ng-combo-date-picker ng-model="namesFr" ng-months="{{ names }}"></ng-combo-date-picker>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://github.com/jfmdev/ngComboDatePicker" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    </body>
+</html>
