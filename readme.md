@@ -45,10 +45,10 @@ The _ngComboDatePicker_ directive supports the following attributes:
 Name | Description
 ------------- | ----
 `ngModel`  | (mandatory) A _Date_ object in which the picked date is going to be stored. This attribute can also be used to define the initial value of the picker.
-`ngDate`  | A _Date_ object (or an _string_ representing a date) with the initial date of the picker.
-`ngMinDate`  | A _Date_ object (or an _string_ representing a date) with the minimum date that can be picked. By default the minimum date is 100 years before the current day.
-`ngMaxDate`  | A _Date_ object (or an _string_ representing a date) with the maximum date that can be picked. By default the maximum date is the current day.
-`ngMonths`  | A _string_ (or an array of _string_) with the names of the twelve months, separated by comma. 
+`ngDate`  | A string representing the initial date of the picker.
+`ngMinDate`  | A _string_ representing the minimum date that can be picked. By default the minimum date is 100 years before the current day.
+`ngMaxDate`  | A _string_ representing the maximum date that can be picked. By default the maximum date is the current day.
+`ngMonths`  | A _string_ with the names of the twelve months, separated by comma. 
 `ngOrder`  | A _string_ with the characters "d", "m" and "y" indicating in which order the combo boxes must be displayed. By default, the combo boxes are displayed in the order "dmy".
 
 License
