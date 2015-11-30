@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.0.0
+ * ngComboDatePicker v1.1.0
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
@@ -18,7 +18,10 @@ angular.module("ngComboDatePicker", [])
             ngMinDate : '@',
             ngMaxDate : '@',
             ngMonths : '@',
-            ngOrder: '@'
+            ngOrder: '@',
+            ngAttrsDate: '@',
+            ngAttrsMonth: '@',
+            ngAttrsYear: '@' 
         },
         controller: ['$scope', function($scope) {
             // Define function for parse dates.
@@ -48,10 +51,25 @@ angular.module("ngComboDatePicker", [])
                 return res;
             }
 
+            // Function to parse a JSON object.
+            function parseJsonPlus(jsonObj) {
+                var res = null;
+                if(jsonObj != null) {
+                    try{ res = JSON.parse(jsonObj); }catch(ex) {}
+                    if(res == null) try{ res = JSON.parse(jsonObj.replace(/'/g, '"')); }catch(ex) {}
+                }
+                return res;
+            }
+            
             // Initialize model.
             $scope.ngModel = parseDate($scope.ngModel);
             if($scope.ngModel == null) $scope.ngModel = new Date();
 
+            // Initialize attributes variables.
+            $scope.ngAttrsDate = parseJsonPlus($scope.ngAttrsDate);
+            $scope.ngAttrsMonth = parseJsonPlus($scope.ngAttrsMonth);
+            $scope.ngAttrsYear = parseJsonPlus($scope.ngAttrsYear);
+            
             // Verify if initial date was defined.
             var initDate = parseDate($scope.ngDate);
             if(initDate != null) $scope.ngModel = initDate;
@@ -160,12 +178,18 @@ angular.module("ngComboDatePicker", [])
                 $scope.updateDateList();
             };
 
+            $scope.getSomething = function() { return 'color:red;'; };
         } ],
         link: function(scope, element, attrs) {
             // Initialize variables.
             var jqLite = angular.element;
             var children = jqLite(element[0]).children();
             var order = scope.ngOrder.split('');
+
+            // Add attributes.
+            if(scope.ngAttrsDate != null) jqLite(children[0]).attr( scope.ngAttrsDate );
+            if(scope.ngAttrsMonth != null) jqLite(children[1]).attr( scope.ngAttrsMonth );
+            if(scope.ngAttrsYear != null) jqLite(children[2]).attr( scope.ngAttrsYear );
 
             // Reorder elements.
             for(var i=0; i<order.length; i++) {

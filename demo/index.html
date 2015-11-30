@@ -53,6 +53,10 @@
             <h2>Change strings for months</h2>
             <p>Choose a date: <ng-combo-date-picker ng-model="names" ng-months="Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre"></ng-combo-date-picker></p>
             <p>Current selection is: <strong>{{ names }}</strong>
+
+            <h2>Define attributtes</h2>
+            <p>Choose a date: <ng-combo-date-picker ng-model="attrs" ng-attrs-date='{"style": "color:red"}' ng-attrs-month='{"style": "color:green"}' ng-attrs-year='{"style": "color:blue"}'></ng-combo-date-picker></p>
+            <p>Current selection is: <strong>{{ attrs }}</strong>
         </div>
     </body>
 </html>
