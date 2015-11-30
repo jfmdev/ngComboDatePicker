@@ -139,6 +139,7 @@
                     </div>
                 </div>
 
+                
                 <h3>Change order of combo boxes</h3>
 
                 <p>By default, the directive first shows the combo box for the day, then combo box for the month and finally the one for the year.
@@ -171,6 +172,7 @@
                     </div>
                 </div>
 
+                
                 <h3>Define minimum and maximum dates</h3>
 
                 <p>By default, the directive let to choose any date in the last 100 years. However this can be changed by using the attributes
@@ -216,7 +218,6 @@ $scope.max = new Date('2016-09-07');</code></pre>
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-sm-8">
                         <pre class="friendly"><code class="javascript">$scope.names = "Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre";</code></pre>
@@ -231,6 +232,21 @@ $scope.max = new Date('2016-09-07');</code></pre>
                         <ng-combo-date-picker ng-model="namesFr" ng-months="{{ names }}"></ng-combo-date-picker>
                     </div>
                 </div>
+                
+                
+                <h3>Add attributes</h3>
+
+                <p>You can add attributes to each element by using the attributes <code>ng-attrs-date</code>, <code>ng-attrs-month</code> and <code>ng-attrs-year</code>.</p>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;attrs&quot; ng-attrs-date='{&quot;style&quot;: &quot;color:red&quot;}' ng-attrs-month='{&quot;style&quot;: &quot;color:green&quot;}' ng-attrs-year='{&quot;style&quot;: &quot;color:blue&quot;}'&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="attrs" ng-attrs-date='{"style": "color:red"}' ng-attrs-month="{'style': 'color:green'}" ng-attrs-year='{"style": "color:blue"}'></ng-combo-date-picker>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
