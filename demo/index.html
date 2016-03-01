@@ -21,42 +21,98 @@
 
         <div ng-controller="myCtrl">
             <h2>Basic example</h2>
-            <p>Choose a date: <ng-combo-date-picker ng-model="basic"></ng-combo-date-picker></p>
-            <p>Current selection is: <strong>{{ basic }}</strong>
+            <script type="text/javascript">
+                app.controller('basicCtrl', function ($scope) {
+                    $scope.basic = new Date();
+                });
+            </script>
+            <div ng-controller="basicCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="basic"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ basic }}</strong>
+            </div>
 
+            
             <h2>Change order of combo boxes</h2>
-            <p>Choose a date: <ng-combo-date-picker ng-model="change" ng-order="ymd"></ng-combo-date-picker></p>
-            <p>Current selection is: <strong>{{ change }}</strong>
+            <script type="text/javascript">
+                app.controller('changeOrderCtrl', function ($scope) {
+                    $scope.change = new Date();
+                });
+            </script>
+            <div ng-controller="changeOrderCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="change" ng-order="ymd"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ change }}</strong>
+            </div>
 
+            
             <h2>Set initial date</h2>
 
+            
             <h3>To fixed value</h3>
-            <p>Choose a date: <ng-combo-date-picker ng-model="initial" ng-date="1956-07-10"></ng-combo-date-picker></p>
-            <p>Current selection is: <strong>{{ initial }}</strong>
-
-            <h3>To dinamic value</h3>
             <script type="text/javascript">
-                app.controller('initialDynCtrl', function ($scope) {
+                app.controller('setInitialCtrl', function ($scope) {
+                    $scope.fixed = new Date();
+                });
+            </script>
+            <div ng-controller="setInitialCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="fixed" ng-date="1956-07-10"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ fixed }}</strong>
+            </div>
+
+            
+            <h3>To dynamic value</h3>
+            <script type="text/javascript">
+                app.controller('toDynamicCtrl', function ($scope) {
                     var now = new Date();
                     $scope.init = new Date(now.getTime() + 365*24*60*60*1000);
                 });
             </script>
-            <div ng-controller="initialDynCtrl">
-                <p>Choose a date: <ng-combo-date-picker ng-model="initial2" ng-date="{{ init.toString() }}"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ initial2 }}</strong>
+            <div ng-controller="toDynamicCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="dynamic" ng-date="{{ init.toString() }}"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ dynamic }}</strong>
             </div>
 
+            
+            <h3>To empty value</h3>
+            <div>
+                <p>Choose a date: <ng-combo-date-picker ng-model="emptyDate"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ emptyDate }}</strong>
+            </div>
+
+            
             <h2>Define minimum and maximum dates</h2>
-            <p>Choose a date: <ng-combo-date-picker ng-model="range" ng-min-date="1800-01-01" ng-max-date="1900-12-31"></ng-combo-date-picker></p>
-            <p>Current selection is: <strong>{{ range }}</strong>
+            <script type="text/javascript">
+                app.controller('minAndMaxCtrl', function ($scope) {
+                    $scope.range = new Date();
+                });
+            </script>
+            <div ng-controller="minAndMaxCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="range" ng-min-date="1800-01-01" ng-max-date="1900-12-31"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ range }}</strong>
+            </div>
 
+            
             <h2>Change strings for months</h2>
-            <p>Choose a date: <ng-combo-date-picker ng-model="names" ng-months="Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre"></ng-combo-date-picker></p>
-            <p>Current selection is: <strong>{{ names }}</strong>
+            <script type="text/javascript">
+                app.controller('monthStringsCtrl', function ($scope) {
+                    $scope.names = new Date();
+                });
+            </script>
+            <div ng-controller="monthStringsCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="names" ng-months="Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ names }}</strong>
+            </div>
 
+            
             <h2>Define attributtes</h2>
-            <p>Choose a date: <ng-combo-date-picker ng-model="attrs" ng-attrs-date='{"style": "color:red"}' ng-attrs-month='{"style": "color:green"}' ng-attrs-year='{"style": "color:blue"}'></ng-combo-date-picker></p>
-            <p>Current selection is: <strong>{{ attrs }}</strong>
+            <script type="text/javascript">
+                app.controller('attributesCtrl', function ($scope) {
+                    $scope.attrs = new Date();
+                });
+            </script>
+            <div ng-controller="attributesCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="attrs" ng-attrs-date='{"style": "color:red"}' ng-attrs-month='{"style": "color:green"}' ng-attrs-year='{"style": "color:blue"}'></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ attrs }}</strong>
+            </div>
         </div>
     </body>
 </html>

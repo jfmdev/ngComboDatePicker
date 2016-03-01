@@ -1,6 +1,6 @@
 {
   "name": "ng-combo-date-picker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An Angular directive to select dates using combo boxes",
   "main": "source/ngComboDatePicker.js",
   "scripts": {

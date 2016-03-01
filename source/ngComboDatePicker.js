@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.1.0
+ * ngComboDatePicker v1.1.1
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
@@ -42,11 +42,13 @@ angular.module("ngComboDatePicker", [])
             // Define fuction for getting the maximum date for a month.
             function maxDate(month, year) {
                 var res = 31;
-                if(month == 4 || month == 6 || month == 9 || month == 11) {
-                    res = 30;
-                }
-                if(month == 2) {
-                    res = year % 4 == 0 && year % 100 != 0? 29 : 28;
+                if(month != null) {
+                    if(month == 4 || month == 6 || month == 9 || month == 11) {
+                        res = 30;
+                    }
+                    if(year != null && month == 2) {
+                        res = year % 4 == 0 && year % 100 != 0? 29 : 28;
+                    }
                 }
                 return res;
             }
@@ -61,9 +63,8 @@ angular.module("ngComboDatePicker", [])
                 return res;
             }
             
-            // Initialize model.
+            // Initialize model.  
             $scope.ngModel = parseDate($scope.ngModel);
-            if($scope.ngModel == null) $scope.ngModel = new Date();
 
             // Initialize attributes variables.
             $scope.ngAttrsDate = parseJsonPlus($scope.ngAttrsDate);
@@ -118,8 +119,8 @@ angular.module("ngComboDatePicker", [])
             // Initialize list of months.
             $scope.updateMonthList = function() {
                 // Some months can not be choosed if the year matchs with the year of the minimum or maximum dates.
-                var start = $scope.ngModel.getFullYear() == $scope.minDate.getFullYear()? $scope.minDate.getMonth() : 0;
-                var end = $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()? $scope.maxDate.getMonth() : 11;
+                var start = $scope.ngModel != null && $scope.ngModel.getFullYear() == $scope.minDate.getFullYear()? $scope.minDate.getMonth() : 0;
+                var end = $scope.ngModel != null && $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()? $scope.maxDate.getMonth() : 11;
 
                 // Generate list.
                 $scope.months = [];
@@ -132,13 +133,13 @@ angular.module("ngComboDatePicker", [])
             $scope.updateDateList = function() {
                 // Start date is 1, unless the selected month and year matchs the minimum date.
                 var start = 1;
-                if($scope.ngModel.getMonth() == $scope.minDate.getMonth() && $scope.ngModel.getFullYear() == $scope.minDate.getFullYear()) {
+                if($scope.ngModel != null && $scope.ngModel.getMonth() == $scope.minDate.getMonth() && $scope.ngModel.getFullYear() == $scope.minDate.getFullYear()) {
                     start = $scope.minDate.getDate();
                 }
 
                 // End date is 30 or 31 (28 or 29 in February), unless the selected month and year matchs the maximum date.
-                var end = maxDate($scope.ngModel.getMonth()+1, $scope.ngModel.getFullYear());
-                if($scope.ngModel.getMonth() == $scope.maxDate.getMonth() && $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()) {
+                var end = $scope.ngModel != null? maxDate($scope.ngModel.getMonth()+1, $scope.ngModel.getFullYear()) : maxDate(null, null);
+                if($scope.ngModel != null && $scope.ngModel.getMonth() == $scope.maxDate.getMonth() && $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()) {
                     end = $scope.maxDate.getDate();
                 }
 
@@ -153,9 +154,9 @@ angular.module("ngComboDatePicker", [])
             // When the model is updated, update the combo boxes.
             $scope.modelUpdated = function() {
                 // Update combo boxes.
-                $scope.date = $scope.ngModel.getDate();
-                $scope.month = $scope.ngModel.getMonth();
-                $scope.year = $scope.ngModel.getFullYear();
+                $scope.date = $scope.ngModel != null? $scope.ngModel.getDate() : null;
+                $scope.month = $scope.ngModel != null? $scope.ngModel.getMonth() : null;
+                $scope.year = $scope.ngModel != null? $scope.ngModel.getFullYear() : null;
 
                 // Hide or show days and months according to the min and max dates.
                 $scope.updateMonthList();
@@ -169,10 +170,20 @@ angular.module("ngComboDatePicker", [])
             // When a combo box is changed, update the model and verify which values in the combo boxes for dates and months can be show.
             $scope.onChange = function(part) {
                 // Update model.
-                var maxDay = maxDate($scope.month+1, $scope.year);
-                $scope.ngModel = new Date($scope.year, $scope.month, $scope.date > maxDay? maxDay : $scope.date,
-                                          $scope.ngModel.getHours(), $scope.ngModel.getMinutes(), $scope.ngModel.getSeconds(), $scope.ngModel.getMilliseconds());
-
+                if($scope.date != null && $scope.month != null && $scope.year != null) {
+                    var maxDay = maxDate($scope.month+1, $scope.year);
+                    
+                    var hours = 0, minutes = 0, seconds = 0, milliseconds = 0;
+                    if($scope.ngModel != null) {
+                        hours = $scope.ngModel.getHours();
+                        minutes = $scope.ngModel.getMinutes();
+                        seconds = $scope.ngModel.getSeconds();
+                        milliseconds = $scope.ngModel.getMilliseconds();
+                    }
+                    
+                    $scope.ngModel = new Date($scope.year, $scope.month, $scope.date > maxDay? maxDay : $scope.date, hours, minutes, seconds, milliseconds);
+                }
+                
                 // Hide or show days and months according to the min and max dates.
                 $scope.updateMonthList();
                 $scope.updateDateList();
