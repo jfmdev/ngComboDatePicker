@@ -21,7 +21,8 @@ angular.module("ngComboDatePicker", [])
             ngOrder: '@',
             ngAttrsDate: '@',
             ngAttrsMonth: '@',
-            ngAttrsYear: '@' 
+            ngAttrsYear: '@',
+						ngYearOrder: '@'
         },
         controller: ['$scope', function($scope) {
             // Define function for parse dates.
@@ -99,10 +100,17 @@ angular.module("ngComboDatePicker", [])
             if($scope.ngModel > $scope.maxDate) $scope.ngModel = $scope.maxDate;
 
             // Initialize list of years.
+						$scope.ngYearOrder = $scope.ngYearOrder ? $scope.ngYearOrder : "asc"; //set default order value
             $scope.years = [];
-            for(var i=$scope.minDate.getFullYear(); i<=$scope.maxDate.getFullYear(); i++) {
-                $scope.years.push(i);
-            }
+						if($scope.ngYearOrder == "desc") {
+							for(var i=$scope.maxDate.getFullYear(); i>=$scope.minDate.getFullYear(); i--) {
+									$scope.years.push(i);
+							}
+						} else {//"asc" order by default
+							for(var i=$scope.minDate.getFullYear(); i<=$scope.maxDate.getFullYear(); i++) {
+									$scope.years.push(i);
+							}
+						}
 
             // Initialize list of months names.
             var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
