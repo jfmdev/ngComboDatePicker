@@ -113,6 +113,18 @@
                 <p>Choose a date: <ng-combo-date-picker ng-model="attrs" ng-attrs-date='{"style": "color:red"}' ng-attrs-month='{"style": "color:green"}' ng-attrs-year='{"style": "color:blue"}'></ng-combo-date-picker></p>
                 <p>Current selection is: <strong>{{ attrs }}</strong>
             </div>
+            
+            
+            <h2>Change years order</h2>
+            <script type="text/javascript">
+                app.controller('yearsOrderCtrl', function ($scope) {
+                    $scope.yearsOrder = new Date();
+                });
+            </script>
+            <div ng-controller="yearsOrderCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-model="yearsOrder" ng-year-order="desc"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ yearsOrder }}</strong>
+            </div>        
         </div>
     </body>
 </html>

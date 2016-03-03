@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.1.1
+ * ngComboDatePicker v1.1.2
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
@@ -22,7 +22,7 @@ angular.module("ngComboDatePicker", [])
             ngAttrsDate: '@',
             ngAttrsMonth: '@',
             ngAttrsYear: '@',
-						ngYearOrder: '@'
+			ngYearOrder: '@'
         },
         controller: ['$scope', function($scope) {
             // Define function for parse dates.
@@ -100,17 +100,15 @@ angular.module("ngComboDatePicker", [])
             if($scope.ngModel > $scope.maxDate) $scope.ngModel = $scope.maxDate;
 
             // Initialize list of years.
-						$scope.ngYearOrder = $scope.ngYearOrder ? $scope.ngYearOrder : "asc"; //set default order value
             $scope.years = [];
-						if($scope.ngYearOrder == "desc") {
-							for(var i=$scope.maxDate.getFullYear(); i>=$scope.minDate.getFullYear(); i--) {
-									$scope.years.push(i);
-							}
-						} else {//"asc" order by default
-							for(var i=$scope.minDate.getFullYear(); i<=$scope.maxDate.getFullYear(); i++) {
-									$scope.years.push(i);
-							}
-						}
+            for(var i=$scope.minDate.getFullYear(); i<=$scope.maxDate.getFullYear(); i++) {
+                $scope.years.push(i);
+            }
+
+            // Verify if the order of the years must be reversed.
+            if(typeof $scope.ngYearOrder == 'string' && $scope.ngYearOrder.indexOf('des') == 0) {
+                $scope.years.reverse();
+            }
 
             // Initialize list of months names.
             var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
