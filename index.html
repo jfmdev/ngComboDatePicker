@@ -267,6 +267,25 @@ $scope.max = new Date('2016-09-07');</code></pre>
                     </div>
                 </div>
                 
+                
+                <h3>Set sort order for years</h3>
+
+                <p>By default, the combo box for years is sorted in ascending order, however you can use the attribute <code>ng-year-order</code> to sort the values in descending order.</p>
+
+                <script type="text/javascript">
+                    app.controller('myCtrlDesc', function ($scope) {
+                        $scope.desc = new Date();
+                    });
+                </script>
+                <div class="row" ng-controller="myCtrlDesc">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&#x3C;ng-combo-date-picker ng-model=&#x22;desc&#x22; ng-year-order=&#x22;desc&#x22;&#x3E;&#x3C;/ng-combo-date-picker&#x3E;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="desc" ng-year-order="desc"></ng-combo-date-picker>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
