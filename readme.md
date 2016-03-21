@@ -53,7 +53,8 @@ Name | Description
 `ngAttrsDate`  | A JSON object with the attributes to add to the `select` element for the date. 
 `ngAttrsMonth`  | A JSON object with the attributes to add to the `select` element for the month. 
 `ngAttrsYear`  | A JSON object with the attributes to add to the `select` element for the year. 
-`ngYearOrder`  | A _string_ indicating of the years must be sorted in "ascending" or "descending" order. 
+`ngYearOrder`  | A _string_ indicating if the years must be sorted in "ascending" or "descending" order. 
+`ngTimezone`  | A _number_ indicating timezone to be used. By default the timezone of the client is used. 
 
 License
 -------

@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.1.2
+ * ngComboDatePicker v1.2.0
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
@@ -22,24 +22,35 @@ angular.module("ngComboDatePicker", [])
             ngAttrsDate: '@',
             ngAttrsMonth: '@',
             ngAttrsYear: '@',
-			ngYearOrder: '@'
+            ngYearOrder: '@',
+            ngTimezone: '@'
         },
         controller: ['$scope', function($scope) {
             // Define function for parse dates.
-            function parseDate(myDate) {
+            function parseDate(myDate, myTimezone) {
                 var res = null;
                 if(myDate !== undefined && myDate !== null) {
                     if(myDate instanceof Date) {
                         res = myDate;
                     } else {
                         if(typeof myDate == 'number' || typeof myDate == 'string') {
+                            // Parse date.
                             res = new Date(isNaN(myDate)? myDate : parseInt(myDate, 10));
+                            
+                            // Adjust timezone.
+                            res = adjustTimezone(res, myTimezone);
                         }
                     }
                 }
                 return res;
             };
 
+            // Define function for adjust timezone.
+            function adjustTimezone(myDate, myTimezone) {
+                var offset = isNaN(myTimezone)? new Date().getTimezoneOffset() : parseFloat(myTimezone)*60;
+                return new Date(myDate.getTime() + offset*60*1000);                           
+            }
+            
             // Define fuction for getting the maximum date for a month.
             function maxDate(month, year) {
                 var res = 31;
@@ -65,7 +76,7 @@ angular.module("ngComboDatePicker", [])
             }
             
             // Initialize model.  
-            $scope.ngModel = parseDate($scope.ngModel);
+            $scope.ngModel = parseDate($scope.ngModel, $scope.ngTimezone);
 
             // Initialize attributes variables.
             $scope.ngAttrsDate = parseJsonPlus($scope.ngAttrsDate);
@@ -73,7 +84,7 @@ angular.module("ngComboDatePicker", [])
             $scope.ngAttrsYear = parseJsonPlus($scope.ngAttrsYear);
             
             // Verify if initial date was defined.
-            var initDate = parseDate($scope.ngDate);
+            var initDate = parseDate($scope.ngDate, $scope.ngTimezone);
             if(initDate != null) $scope.ngModel = initDate;
 
             // Initialize order.
@@ -84,15 +95,15 @@ angular.module("ngComboDatePicker", [])
             }
 
             // Initialize minimal and maximum values.
-            $scope.minDate = parseDate($scope.ngMinDate);
+            $scope.minDate = parseDate($scope.ngMinDate, $scope.ngTimezone);
             if($scope.ngMinDate == null) {
-                var now = new Date();
+                var now = adjustTimezone(new Date(), $scope.ngTimezone);
                 $scope.minDate = new Date(now.getFullYear()-100, now.getMonth(), now.getDate(),
                                           now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
             }
-            $scope.maxDate = parseDate($scope.ngMaxDate);
+            $scope.maxDate = parseDate($scope.ngMaxDate, $scope.ngTimezone);
             if($scope.maxDate == null) {
-                $scope.maxDate = new Date();
+                $scope.maxDate = adjustTimezone(new Date(), $scope.ngTimezone);
             }
 
             // Verify if selected date is in the valid range.
@@ -155,7 +166,6 @@ angular.module("ngComboDatePicker", [])
                     $scope.dates.push(i);
                 }
             };
-
 
             // When the model is updated, update the combo boxes.
             $scope.modelUpdated = function() {
