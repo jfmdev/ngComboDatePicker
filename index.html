@@ -286,6 +286,39 @@ $scope.max = new Date('2016-09-07');</code></pre>
                     </div>
                 </div>
                 
+                
+                <h3>Define timezone</h3>
+
+                <p>By default, the client's timezone is used when defining default's dates or when parsing dates defined as strings (in the attributes <code>ng-date</code>, <code>ng-max</code> and <code>ng-min</code>). However, this can be changed by using the attribute <code>ng-timezone</code>.</p>
+
+                <script type="text/javascript">
+                    app.controller('myCtrlTimezone', function ($scope) {
+                        $scope.timezone1 = new Date();
+                        $scope.timezone2 = new Date();
+                        $scope.timezone3 = new Date();
+                    });
+                </script>
+                <div class="row" ng-controller="myCtrlTimezone">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;timezone1&quot; ng-date=&quot;2000-01-01&quot; ng-timezone=&quot;-23&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="timezone1" ng-date="2000-01-01" ng-timezone="-23"></ng-combo-date-picker>
+                    </div>
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;timezone2&quot; ng-date=&quot;2000-01-01&quot; ng-timezone=&quot;0&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="timezone2" ng-date="2000-01-01" ng-timezone="0"></ng-combo-date-picker>
+                    </div>
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;timezone3&quot; ng-date=&quot;2000-01-01&quot; ng-timezone=&quot;23&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="timezone3" ng-date="2000-01-01" ng-timezone="23"></ng-combo-date-picker>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
