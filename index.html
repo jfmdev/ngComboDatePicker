@@ -319,6 +319,20 @@ $scope.max = new Date('2016-09-07');</code></pre>
                     </div>
                 </div>
                 
+                
+                <h3>Set placeholders</h3>
+
+                <p>You can define a placeholder for each combobox by using the attribute <code>ng-placeholder</code>.</p>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;placeholder&quot; ng-placeholder=&quot;Year,Month,Date&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    </div>
+                    <div class="col-sm-4 demo">
+                        <ng-combo-date-picker ng-model="placeholder" ng-placeholder="Year,Month,Date"></ng-combo-date-picker>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
