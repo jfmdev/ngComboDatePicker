@@ -55,6 +55,7 @@ Name | Description
 `ngAttrsYear`  | A JSON object with the attributes to add to the `select` element for the year. 
 `ngYearOrder`  | A _string_ indicating if the years must be sorted in "ascending" or "descending" order. 
 `ngTimezone`  | A _number_ indicating timezone to be used. By default the timezone of the client is used. 
+`ngPlaceholder`  | A _string_ with the placeholders for the year, month and date combo boxes (in that order), separated by comma. 
 
 License
 -------
