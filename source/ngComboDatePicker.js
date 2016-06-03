@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.2.1
+ * ngComboDatePicker v1.2.2
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
@@ -201,8 +201,8 @@ angular.module("ngComboDatePicker", [])
 
             // When a combo box is changed, update the model and verify which values in the combo boxes for dates and months can be show.
             $scope.onChange = function(part) {
-                // Update model.                
-                if($scope.date != null && $scope.month != null && $scope.year != null && $scope.date != '' && $scope.month != '' && $scope.year != '') {
+                // Update model.
+                if($scope.date != null && $scope.date != '' && !isNaN(parseInt($scope.month)) && $scope.year != null && $scope.year != '') {
                     var maxDay = maxDate($scope.month+1, $scope.year);
                     
                     var hours = 0, minutes = 0, seconds = 0, milliseconds = 0;
