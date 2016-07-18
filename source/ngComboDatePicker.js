@@ -125,7 +125,6 @@ angular.module("ngComboDatePicker", [])
 
             // Initialize list of years.
             $scope.years = [];
-            if(placeHolders) $scope.years.push(placeHolders[0]);
             for(var i=$scope.minDate.getFullYear(); i<=$scope.maxDate.getFullYear(); i++) {
                 $scope.years.push({value:i, name:i});
             }
@@ -134,6 +133,9 @@ angular.module("ngComboDatePicker", [])
             if(typeof $scope.ngYearOrder == 'string' && $scope.ngYearOrder.indexOf('des') == 0) {
                 $scope.years.reverse();
             }
+
+            // Prepend the years placeholder
+            if(placeHolders) $scope.years.unshift(placeHolders[0]);
 
             // Initialize list of months names.
             var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
