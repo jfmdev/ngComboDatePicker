@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.2.2
+ * ngComboDatePicker v1.2.3
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
@@ -197,9 +197,11 @@ angular.module("ngComboDatePicker", [])
                     $scope.month = '';
                     $scope.year = '';
                     
-                    placeHolders[0].disabled = false;
-                    placeHolders[1].disabled = false;
-                    placeHolders[2].disabled = false;
+                    if(placeHolders) {
+                        placeHolders[0].disabled = false;
+                        placeHolders[1].disabled = false;
+                        placeHolders[2].disabled = false;
+                    }
                 }
 
                 // Hide or show days and months according to the min and max dates.
