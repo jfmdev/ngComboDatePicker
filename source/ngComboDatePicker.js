@@ -186,9 +186,19 @@ angular.module("ngComboDatePicker", [])
             // When the model is updated, update the combo boxes.
             $scope.modelUpdated = function() {
                 // Update combo boxes.
-                $scope.date = $scope.ngModel != null? $scope.ngModel.getDate() : '';
-                $scope.month = $scope.ngModel != null? $scope.ngModel.getMonth() : '';
-                $scope.year = $scope.ngModel != null? $scope.ngModel.getFullYear() : '';
+                if ($scope.ngModel) {
+                    $scope.date = $scope.ngModel.getDate();
+                    $scope.month = $scope.ngModel.getMonth();
+                    $scope.year = $scope.ngModel.getFullYear();
+                } else {
+                    $scope.date = '';
+                    $scope.month = '';
+                    $scope.year = '';
+                    
+                    placeHolders[0].disabled = false;
+                    placeHolders[1].disabled = false;
+                    placeHolders[2].disabled = false;
+                }
 
                 // Hide or show days and months according to the min and max dates.
                 $scope.updateMonthList();
