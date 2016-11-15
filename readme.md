@@ -12,7 +12,7 @@ Usage
 
 In order to use this directive:
 
-**1)** Include the library (located in the `source` folder) in the header of your HTML files:
+**1)** Include the library (located in the `source` folder) in the header of your HTML files, after including Angular (v1.4.0 or greater):
 
 ```html
 <script type="text/javascript" src="angular.min.js"></script>
