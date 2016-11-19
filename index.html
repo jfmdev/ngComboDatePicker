@@ -42,7 +42,6 @@
 
             app.controller('myCtrl', function ($scope) {
                 
-
             });
         </script>
     </head>
@@ -66,7 +65,7 @@
                     <p><strong>1)</strong> Include the <a href="https://github.com/jfmdev/ngComboDatePicker" target="_blank">library</a> (after including Angular) in the header of your HTML files.</p>
 
                     <pre><code class="html">&lt;script type=&quot;text/javascript&quot; src=&quot;angular.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;ngComboDatePicker.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script type=&quot;text/javascript&quot; src=&quot;ngComboDatePicker.min.js&quot;&gt;&lt;/script&gt;</code></pre>
 
                     <p><strong>2)</strong> Add <em>ngComboDatePicker</em> as a dependency when declaring your Angular's app</p>
 
@@ -292,7 +291,7 @@ $scope.max = new Date('2016-09-07');</code></pre>
                     
                     <h3>Define timezone</h3>
 
-                    <p>By default, the client's timezone is used when defining default's dates or when parsing dates defined as strings (in the attributes <code>ng-date</code>, <code>ng-max</code> and <code>ng-min</code>). However, this can be changed by using the attribute <code>ng-timezone</code>.</p>
+                    <p>By default, the client's timezone is used when parsing dates defined as strings or as integers (in the attributes <code>ng-date</code>, <code>ng-max</code> and <code>ng-min</code>). However, this can be changed by using the attribute <code>ng-timezone</code>.</p>
 
                     <script type="text/javascript">
                         app.controller('myCtrlTimezone', function ($scope) {
