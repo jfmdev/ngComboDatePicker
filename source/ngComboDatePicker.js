@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.2.3
+ * ngComboDatePicker v1.2.4
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
@@ -98,13 +98,13 @@ angular.module("ngComboDatePicker", [])
             // Initialize minimal and maximum values.
             $scope.minDate = parseDate($scope.ngMinDate, $scope.ngTimezone);
             if($scope.ngMinDate == null) {
-                var now = adjustTimezone(new Date(), $scope.ngTimezone);
+                var now = new Date();
                 $scope.minDate = new Date(now.getFullYear()-100, now.getMonth(), now.getDate(),
                                           now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
             }
             $scope.maxDate = parseDate($scope.ngMaxDate, $scope.ngTimezone);
             if($scope.maxDate == null) {
-                $scope.maxDate = adjustTimezone(new Date(), $scope.ngTimezone);
+                $scope.maxDate = new Date();                
             }
 
             // Verify if selected date is in the valid range.
