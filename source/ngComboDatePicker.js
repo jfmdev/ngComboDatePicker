@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.2.4
+ * ngComboDatePicker v1.2.5
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
@@ -104,7 +104,7 @@ angular.module("ngComboDatePicker", [])
             }
             $scope.maxDate = parseDate($scope.ngMaxDate, $scope.ngTimezone);
             if($scope.maxDate == null) {
-                $scope.maxDate = new Date();                
+                $scope.maxDate = new Date();
             }
 
             // Verify if selected date is in the valid range.
@@ -250,11 +250,6 @@ angular.module("ngComboDatePicker", [])
             var children = jqLite(element[0]).children();
             var order = scope.ngOrder.split('');
 
-            // Add attributes.
-            if(scope.ngAttrsDate != null) jqLite(children[0]).attr( scope.ngAttrsDate );
-            if(scope.ngAttrsMonth != null) jqLite(children[1]).attr( scope.ngAttrsMonth );
-            if(scope.ngAttrsYear != null) jqLite(children[2]).attr( scope.ngAttrsYear );
-
             // Reorder elements.
             for(var i=0; i<order.length; i++) {
                 if(order[i] == 'd') jqLite(element[0]).append(children[0]);
@@ -262,11 +257,34 @@ angular.module("ngComboDatePicker", [])
                 if(order[i] == 'y') jqLite(element[0]).append(children[2]);
             }
         },
-        template: function() {
+        template: function(element, attrs) {
+            // Verify if addtional attributes were defined.
+            var strAttrs = ['', '', ''];
+            var attrNames = ['ngAttrsDate', 'ngAttrsMonth', 'ngAttrsYear'];
+            for(var i=0; i<3; i++) {
+                try{
+                    // Verify if the attributes were defined.
+                    if(attrs && attrs[attrNames[i]]) {
+                        // Iterate over each attribute.
+                        eval("var attrsAux= " + attrs[attrNames[i]]);
+                        for(var key in attrsAux) {
+                            var value = attrsAux[key];
+                            if(typeof value == "boolean") {
+                                if(value) strAttrs[i] += key + ' ';
+                            } else {
+                                if(typeof value == "string" && value.indexOf('"') > 0) { value = value.replace(/"/g, '&quot;'); }
+                                strAttrs[i] += key + '="' + value + '" ';
+                            }
+                        }
+                    }
+                }catch(err){console.log(err);}
+            }
+
+            // Generate HTML code.
             var html =
-                '<select ng-model="date" ng-change="onChange(\'date\')" ng-options="date.value as date.name disable when date.disabled for date in dates"></select>' +
-                '<select ng-model="month" ng-change="onChange(\'month\')" ng-options="month.value as month.name disable when month.disabled for month in months"></select>' +
-                '<select ng-model="year" ng-change="onChange(\'year\')" ng-options="year.value as year.name disable when year.disabled for year in years"></select>'
+                '<select ng-model="date" '+strAttrs[0]+' ng-change="onChange(\'date\')" ng-options="date.value as date.name disable when date.disabled for date in dates"></select>' +
+                '<select ng-model="month" '+strAttrs[1]+'  ng-change="onChange(\'month\')" ng-options="month.value as month.name disable when month.disabled for month in months"></select>' +
+                '<select ng-model="year" '+strAttrs[2]+' ng-change="onChange(\'year\')" ng-options="year.value as year.name disable when year.disabled for year in years"></select>'
             ;
 
             return html;

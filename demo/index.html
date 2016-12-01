@@ -28,7 +28,7 @@
             </script>
             <div ng-controller="basicCtrl">
                 <p>Choose a date: <ng-combo-date-picker ng-model="basic"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ basic }}</strong>
+                <p>Current selection is: <strong>{{ basic }}</strong><p/>
             </div>
 
             
@@ -40,7 +40,7 @@
             </script>
             <div ng-controller="changeOrderCtrl">
                 <p>Choose a date: <ng-combo-date-picker ng-model="change" ng-order="ymd"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ change }}</strong>
+                <p>Current selection is: <strong>{{ change }}</strong><p/>
             </div>
 
             
@@ -55,7 +55,7 @@
             </script>
             <div ng-controller="setInitialCtrl">
                 <p>Choose a date: <ng-combo-date-picker ng-model="fixed" ng-date="1956-07-10"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ fixed }}</strong>
+                <p>Current selection is: <strong>{{ fixed }}</strong><p/>
             </div>
 
             
@@ -63,19 +63,19 @@
             <script type="text/javascript">
                 app.controller('toDynamicCtrl', function ($scope) {
                     var now = new Date();
-                    $scope.init = new Date(now.getTime() + 365*24*60*60*1000);
+                    $scope.init = new Date(now.getTime() - 365*24*60*60*1000);
                 });
             </script>
             <div ng-controller="toDynamicCtrl">
                 <p>Choose a date: <ng-combo-date-picker ng-model="dynamic" ng-date="{{ init.toString() }}"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ dynamic }}</strong>
+                <p>Current selection is: <strong>{{ dynamic }}</strong><p/>
             </div>
 
             
             <h3>To empty value</h3>
             <div>
                 <p>Choose a date: <ng-combo-date-picker ng-model="emptyDate"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ emptyDate }}</strong>
+                <p>Current selection is: <strong>{{ emptyDate }}</strong><p/>
             </div>
 
             
@@ -87,7 +87,7 @@
             </script>
             <div ng-controller="minAndMaxCtrl">
                 <p>Choose a date: <ng-combo-date-picker ng-model="range" ng-min-date="1800-01-01" ng-max-date="1900-12-31"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ range }}</strong>
+                <p>Current selection is: <strong>{{ range }}</strong><p/>
             </div>
 
             
@@ -99,7 +99,7 @@
             </script>
             <div ng-controller="monthStringsCtrl">
                 <p>Choose a date: <ng-combo-date-picker ng-model="names" ng-months="Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ names }}</strong>
+                <p>Current selection is: <strong>{{ names }}</strong><p/>
             </div>
 
             
@@ -111,7 +111,7 @@
             </script>
             <div ng-controller="attributesCtrl">
                 <p>Choose a date: <ng-combo-date-picker ng-model="attrs" ng-attrs-date='{"style": "color:red"}' ng-attrs-month='{"style": "color:green"}' ng-attrs-year='{"style": "color:blue"}'></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ attrs }}</strong>
+                <p>Current selection is: <strong>{{ attrs }}</strong><p/>
             </div>
             
             
@@ -123,26 +123,63 @@
             </script>
             <div ng-controller="yearsOrderCtrl">
                 <p>Choose a date: <ng-combo-date-picker ng-model="yearsOrder" ng-year-order="desc"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ yearsOrder }}</strong>
+                <p>Current selection is: <strong>{{ yearsOrder }}</strong><p/>
             </div>        
             
             
             <h2>Timezones</h2>
             <div>
                 <p>Choose a date: <ng-combo-date-picker ng-model="timezone1" ng-date="2000-01-01" ng-timezone="-20"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ timezone1 }}</strong>
+                <p>Current selection is: <strong>{{ timezone1 }}</strong><p/>
                 <p>Choose a date: <ng-combo-date-picker ng-model="timezone2" ng-date="2000-01-01" ng-timezone="20"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ timezone2 }}</strong>
+                <p>Current selection is: <strong>{{ timezone2 }}</strong><p/>
                 <p>Choose a date: <ng-combo-date-picker ng-model="timezone3" ng-date="2000-01-01" ng-timezone="10.5"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ timezone3 }}</strong>
+                <p>Current selection is: <strong>{{ timezone3 }}</strong><p/>
             </div>        
             
             
             <h2>Place holders</h2>
             <div>
                 <p>Choose a date: <ng-combo-date-picker ng-model="placeholder" ng-placeholder="Select year,Select month,Select date"></ng-combo-date-picker></p>
-                <p>Current selection is: <strong>{{ placeholder }}</strong>
-            </div>        
-        </div>
+                <p>Current selection is: <strong>{{ placeholder }}</strong><p/>
+            </div>
+
+            <h2>Form validation</h2>
+            <script type="text/javascript">
+                app.controller('formValidationCtrl', function ($scope) {
+
+                });
+            </script>
+            <div ng-controller="formValidationCtrl">
+                <form name="myForm" novalidate>
+                    <p>Choose a date: <ng-combo-date-picker ng-model="formv" ng-attrs-date='{"name": "formv_date", "required": true}' ng-attrs-month='{"name": "formv_month", "required": true}' ng-attrs-year='{"name": "formv_year", "required": true}'></ng-combo-date-picker></p>
+                    <p>Current selection is: <strong>{{ formv }}</strong></p>
+                    <p>Form is valid: <strong>{{ myForm.$invalid? 'No' : 'Yes' }}</strong></p>
+                    <table>
+                        <tr>
+                            <th>Field</th>
+                            <th>Pristine</th>
+                            <th>Dirty</th>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>{{ myForm.formv_date.$pristine? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_date.$dirty? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Month</td>
+                            <td>{{ myForm.formv_month.$pristine? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_month.$dirty? 'Yes' : 'No' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Year</td>
+                            <td>{{ myForm.formv_year.$pristine? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_year.$dirty? 'Yes' : 'No' }}</td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            
+        </div>        
     </body>
 </html>
