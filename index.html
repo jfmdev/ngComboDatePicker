@@ -324,7 +324,7 @@ $scope.max = new Date('2016-09-07');</code></pre>
                     
                     <h3>Set placeholders</h3>
 
-                    <p>You can define a placeholder for each combobox by using the attribute <code>ng-placeholder</code>.</p>
+                    <p>You can define a placeholder for each combo box by using the attribute <code>ng-placeholder</code>.</p>
 
                     <div class="row">
                         <div class="col-sm-8">
@@ -334,7 +334,27 @@ $scope.max = new Date('2016-09-07');</code></pre>
                             <ng-combo-date-picker ng-model="placeholder" ng-placeholder="Year,Month,Date"></ng-combo-date-picker>
                         </div>
                     </div>
-                
+
+                    
+                    <h3>Form validation</h3>
+                    
+                    <p>If you want to use the form validation features of Angular, you can use the attributes <code>ng-attrs-date</code>, <code>ng-attrs-month</code> and <code>ng-attrs-year</code> in order to define the <code>name</code> attribute of each combo box.</p>
+                    
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <pre><code class="html">&lt;form name=&quot;myForm&quot; novalidate&gt;
+    &lt;ng-combo-date-picker ng-model=&quot;formv&quot; ng-attrs-date='{&quot;name&quot;: &quot;myDate&quot;}' ng-attrs-month='{&quot;name&quot;: &quot;myMonth&quot;}' ng-attrs-year='{&quot;name&quot;: &quot;myYear&quot;}'&gt;&lt;/ng-combo-date-picker&gt;
+&lt;/form&gt;</code></pre>
+                        </div>
+                        <div class="col-sm-4 demo">
+                            <form name="myForm" novalidate>
+                                <p><ng-combo-date-picker ng-model="formv" ng-attrs-date='{"name": "myDate"}' ng-attrs-month='{"name": "myMonth"}' ng-attrs-year='{"name": "myYear"}'></ng-combo-date-picker></p>
+                                <p><code>myDate.$dirty</code>: <strong>{{ myForm.myDate.$dirty? 'true' : 'false' }}</strong></p>
+                                <p><code>myMonth.$dirty</code>: <strong>{{ myForm.myMonth.$dirty? 'true' : 'false' }}</strong></p>
+                                <p><code>myYear.$dirty</code>: <strong>{{ myForm.myYear.$dirty? 'true' : 'false' }}</strong></p>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
