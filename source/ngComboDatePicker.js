@@ -1,15 +1,65 @@
 /*
- * ngComboDatePicker v1.2.5
+ * ngComboDatePicker v1.3.0
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
- * License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.html)
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
 // Declare module.
 angular.module("ngComboDatePicker", [])
 
-// Create directive.
+// Declare directive.
 .directive('ngComboDatePicker', function() {
+    // Define fuction for getting the maximum date for a month.
+    function maxDate(month, year) {
+        var res = 31;
+        if(month != null) {
+            if(month == 4 || month == 6 || month == 9 || month == 11) {
+                res = 30;
+            }
+            if(year != null && month == 2) {
+                res = year % 4 == 0 && year % 100 != 0? 29 : 28;
+            }
+        }
+        return res;
+    }
+
+    // Define function for adjust timezone.
+    function adjustTimezone (myDate, myTimezone) {
+        var offset = isNaN(myTimezone)? new Date().getTimezoneOffset() : parseFloat(myTimezone)*60;
+        return new Date(myDate.getTime() + offset*60*1000);                           
+    }
+    
+    // Define function for parse dates.
+    function parseDate(myDate, myTimezone) {
+        var res = null;
+        if(myDate !== undefined && myDate !== null) {
+            if(myDate instanceof Date) {
+                res = myDate;
+            } else {
+                if(typeof myDate == 'number' || typeof myDate == 'string') {
+                    // Parse date.
+                    res = new Date(isNaN(myDate)? myDate : parseInt(myDate, 10));
+                    
+                    // Adjust timezone.
+                    res = adjustTimezone(res, myTimezone);
+                }
+            }
+        }
+        return res;
+    };
+
+    // Function to parse a JSON object.
+    function parseJsonPlus(jsonObj) {
+        var res = null;
+        if(jsonObj != null) {
+            try{ res = JSON.parse(jsonObj); }catch(ex) {}
+            if(res == null) try{ res = JSON.parse(jsonObj.replace(/'/g, '"')); }catch(ex) {}
+        }
+        return res;
+    }
+    
+    // Create directive.
     return {
         restrict: 'AEC',
         scope: {
@@ -24,58 +74,11 @@ angular.module("ngComboDatePicker", [])
             ngAttrsYear: '@',
             ngYearOrder: '@',
             ngTimezone: '@',
-            ngPlaceholder: '@'
+            ngPlaceholder: '@',
+            ngRequired: '@'
         },
-        controller: ['$scope', function($scope) {
-            // Define function for parse dates.
-            function parseDate(myDate, myTimezone) {
-                var res = null;
-                if(myDate !== undefined && myDate !== null) {
-                    if(myDate instanceof Date) {
-                        res = myDate;
-                    } else {
-                        if(typeof myDate == 'number' || typeof myDate == 'string') {
-                            // Parse date.
-                            res = new Date(isNaN(myDate)? myDate : parseInt(myDate, 10));
-                            
-                            // Adjust timezone.
-                            res = adjustTimezone(res, myTimezone);
-                        }
-                    }
-                }
-                return res;
-            };
-
-            // Define function for adjust timezone.
-            function adjustTimezone(myDate, myTimezone) {
-                var offset = isNaN(myTimezone)? new Date().getTimezoneOffset() : parseFloat(myTimezone)*60;
-                return new Date(myDate.getTime() + offset*60*1000);                           
-            }
-            
-            // Define fuction for getting the maximum date for a month.
-            function maxDate(month, year) {
-                var res = 31;
-                if(month != null) {
-                    if(month == 4 || month == 6 || month == 9 || month == 11) {
-                        res = 30;
-                    }
-                    if(year != null && month == 2) {
-                        res = year % 4 == 0 && year % 100 != 0? 29 : 28;
-                    }
-                }
-                return res;
-            }
-
-            // Function to parse a JSON object.
-            function parseJsonPlus(jsonObj) {
-                var res = null;
-                if(jsonObj != null) {
-                    try{ res = JSON.parse(jsonObj); }catch(ex) {}
-                    if(res == null) try{ res = JSON.parse(jsonObj.replace(/'/g, '"')); }catch(ex) {}
-                }
-                return res;
-            }
-            
+        require: 'ngModel',
+        controller: ['$scope', function($scope) {           
             // Initialize model.  
             $scope.ngModel = parseDate($scope.ngModel, $scope.ngTimezone);
 
@@ -112,13 +115,13 @@ angular.module("ngComboDatePicker", [])
             if($scope.ngModel > $scope.maxDate) $scope.ngModel = $scope.maxDate;
 
             // Initialize place holders.
-            var placeHolders = null;
+            $scope.placeHolders = null;
             if($scope.ngPlaceholder !== undefined && $scope.ngPlaceholder !== null && (typeof $scope.ngPlaceholder == 'string' || Array.isArray($scope.ngPlaceholder))) {
                 var holders = typeof $scope.ngPlaceholder == 'string'? $scope.ngPlaceholder.split(',') : $scope.ngPlaceholder;
                 if(holders.length == 3) {
-                    placeHolders = [];
+                    $scope.placeHolders = [];
                     for(var h=0; h<holders.length; h++) {
-                        placeHolders.push({value:'', name:holders[h], disabled:false});
+                        $scope.placeHolders.push({value:'', name:holders[h], disabled:false});
                     }
                 }
             }
@@ -135,7 +138,7 @@ angular.module("ngComboDatePicker", [])
             }
 
             // Prepend the years placeholder
-            if(placeHolders) $scope.years.unshift(placeHolders[0]);
+            if($scope.placeHolders) $scope.years.unshift($scope.placeHolders[0]);
 
             // Initialize list of months names.
             var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -157,7 +160,7 @@ angular.module("ngComboDatePicker", [])
 
                 // Generate list.
                 $scope.months = [];
-                if(placeHolders) $scope.months.push(placeHolders[1]);
+                if($scope.placeHolders) $scope.months.push($scope.placeHolders[1]);
                 for(var i=start; i<=end; i++) {
                     $scope.months.push({value:i, name:monthNames[i]});
                 }
@@ -179,72 +182,13 @@ angular.module("ngComboDatePicker", [])
 
                 // Generate list.
                 $scope.dates = [];
-                if(placeHolders) $scope.dates.push(placeHolders[2]);
+                if($scope.placeHolders) $scope.dates.push($scope.placeHolders[2]);
                 for(var i=start; i<=end; i++) {
                     $scope.dates.push({value:i, name:i});
                 }
             };
-
-            // When the model is updated, update the combo boxes.
-            $scope.modelUpdated = function() {
-                // Update combo boxes.
-                if ($scope.ngModel) {
-                    $scope.date = $scope.ngModel.getDate();
-                    $scope.month = $scope.ngModel.getMonth();
-                    $scope.year = $scope.ngModel.getFullYear();
-                } else {
-                    $scope.date = '';
-                    $scope.month = '';
-                    $scope.year = '';
-                    
-                    if(placeHolders) {
-                        placeHolders[0].disabled = false;
-                        placeHolders[1].disabled = false;
-                        placeHolders[2].disabled = false;
-                    }
-                }
-
-                // Hide or show days and months according to the min and max dates.
-                $scope.updateMonthList();
-                $scope.updateDateList();
-            }
-            // Watch for changes in the model.
-            $scope.$watch('ngModel', function() {
-                $scope.modelUpdated();
-            });
-
-            // When a combo box is changed, update the model and verify which values in the combo boxes for dates and months can be show.
-            $scope.onChange = function(part) {
-                // Update model.
-                if($scope.date != null && $scope.date != '' && !isNaN(parseInt($scope.month)) && $scope.year != null && $scope.year != '') {
-                    var maxDay = maxDate($scope.month+1, $scope.year);
-                    
-                    var hours = 0, minutes = 0, seconds = 0, milliseconds = 0;
-                    if($scope.ngModel != null) {
-                        hours = $scope.ngModel.getHours();
-                        minutes = $scope.ngModel.getMinutes();
-                        seconds = $scope.ngModel.getSeconds();
-                        milliseconds = $scope.ngModel.getMilliseconds();
-                    }
-                    
-                    $scope.ngModel = new Date($scope.year, $scope.month, $scope.date > maxDay? maxDay : $scope.date, hours, minutes, seconds, milliseconds);
-                }
-                
-                // Disable placeholders after selecting a value.
-                if(placeHolders) {
-                    if($scope.year != '') placeHolders[0].disabled = true;
-                    if($scope.month != '') placeHolders[1].disabled = true;
-                    if($scope.date != '') placeHolders[2].disabled = true;
-                }
-                
-                // Hide or show days and months according to the min and max dates.
-                $scope.updateMonthList();
-                $scope.updateDateList();
-            };
-
-            $scope.getSomething = function() { return 'color:red;'; };
         } ],
-        link: function(scope, element, attrs) {
+        link: function(scope, element, attrs, ngModelCtrl) {
             // Initialize variables.
             var jqLite = angular.element;
             var children = jqLite(element[0]).children();
@@ -256,6 +200,91 @@ angular.module("ngComboDatePicker", [])
                 if(order[i] == 'm') jqLite(element[0]).append(children[1]);
                 if(order[i] == 'y') jqLite(element[0]).append(children[2]);
             }
+            
+            // Set formatter function.
+            ngModelCtrl.$formatters.push(function(modelValue) {
+                var res = {date: null, month: null, year: null};
+
+                // Verify if model is defined.
+                if (modelValue) {
+                    res.date = modelValue.getDate();
+                    res.month = modelValue.getMonth();
+                    res.year = modelValue.getFullYear();
+                } else {
+                    res.date = '';
+                    res.month = '';
+                    res.year = '';
+                    
+                    if(scope.placeHolders) {
+                        scope.placeHolders[0].disabled = false;
+                        scope.placeHolders[1].disabled = false;
+                        scope.placeHolders[2].disabled = false;
+                    }
+                }
+
+                // Hide or show days and months according to the min and max dates.
+                scope.updateMonthList();
+                scope.updateDateList();
+                return res;
+            });
+            
+            // Set render function.
+            ngModelCtrl.$render = function() {
+                scope.date  = ngModelCtrl.$viewValue.date;
+                scope.month = ngModelCtrl.$viewValue.month;
+                scope.year  = ngModelCtrl.$viewValue.year;
+            };
+            
+            // Set watch function.
+            scope.$watch('date + "-" + month + "-" + year', function(newValue, oldValue) {
+                if(newValue != oldValue) {
+                    ngModelCtrl.$setViewValue({
+                        date: scope.date,
+                        month: scope.month,
+                        year: scope.year
+                    });
+                }
+            });
+            
+            // Override function to check if the value is empty.
+            ngModelCtrl.$isEmpty = function(viewValue) {
+                return viewValue.date == null || viewValue.date == '' || 
+                       isNaN(parseInt(viewValue.month)) ||
+                       viewValue.year == null || viewValue.year == '';                
+            };
+            
+            // Set parser function.
+            ngModelCtrl.$parsers.push(function(viewValue) {
+                var res = null;
+
+                // Check that the three combo boxes have values.
+                if(viewValue.date != null && viewValue.date != '' && !isNaN(parseInt(viewValue.month)) && viewValue.year != null && viewValue.year != '') {
+                    var maxDay = maxDate(viewValue.month+1, viewValue.year);
+                    
+                    var hours = 0, minutes = 0, seconds = 0, milliseconds = 0;
+                    if(scope.ngModel != null) {
+                        hours = scope.ngModel.getHours();
+                        minutes = scope.ngModel.getMinutes();
+                        seconds = scope.ngModel.getSeconds();
+                        milliseconds = scope.ngModel.getMilliseconds();
+                    }
+                    
+                    res = new Date(viewValue.year, viewValue.month, viewValue.date > maxDay? maxDay : viewValue.date, hours, minutes, seconds, milliseconds);
+                }
+                
+                // Disable placeholders after selecting a value.
+                if(scope.placeHolders) {
+                    if(scope.year != '') scope.placeHolders[0].disabled = true;
+                    if(scope.month != '') scope.placeHolders[1].disabled = true;
+                    if(scope.date != '') scope.placeHolders[2].disabled = true;
+                }
+                
+                // Hide or show days and months according to the min and max dates.
+                scope.updateMonthList();
+                scope.updateDateList();
+                          
+                return res;
+            });
         },
         template: function(element, attrs) {
             // Verify if addtional attributes were defined.
@@ -282,9 +311,9 @@ angular.module("ngComboDatePicker", [])
 
             // Generate HTML code.
             var html =
-                '<select ng-model="date" '+strAttrs[0]+' ng-change="onChange(\'date\')" ng-options="date.value as date.name disable when date.disabled for date in dates"></select>' +
-                '<select ng-model="month" '+strAttrs[1]+'  ng-change="onChange(\'month\')" ng-options="month.value as month.name disable when month.disabled for month in months"></select>' +
-                '<select ng-model="year" '+strAttrs[2]+' ng-change="onChange(\'year\')" ng-options="year.value as year.name disable when year.disabled for year in years"></select>'
+                '<select ng-model="date" '+strAttrs[0]+' ng-options="date.value as date.name disable when date.disabled for date in dates"></select>' +
+                '<select ng-model="month" '+strAttrs[1]+' ng-options="month.value as month.name disable when month.disabled for month in months"></select>' +
+                '<select ng-model="year" '+strAttrs[2]+' ng-options="year.value as year.name disable when year.disabled for year in years"></select>'
             ;
 
             return html;

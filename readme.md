@@ -58,19 +58,11 @@ Name | Description
 `ngYearOrder`  | A _string_ indicating if the years must be sorted in "ascending" or "descending" order. 
 `ngTimezone`  | A _number_ indicating the timezone to be used when converting a string or an integer to a date. By default the timezone of the client is used. 
 `ngPlaceholder`  | A _string_ with the placeholders for the year, month and date combo boxes (in that order), separated by comma. 
+`ngRequired`  | A _boolean_ indicating if the component should be considered invalid if any of his combo boxes is empty. 
 
 License
 -------
 
-ngComboDatePicker is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-ngComboDatePicker is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with ngComboDatePicker. If not, see <http://www.gnu.org/licenses/>.
+ngComboDatePicker is free software; you can redistribute it and/or
+modify it under the terms of the Mozilla Public
+License v2.0. You should have received a copy of the MPL 2.0 along with this library, otherwise you can obtain one at <http://mozilla.org/MPL/2.0/>..

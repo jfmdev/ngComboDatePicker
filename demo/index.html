@@ -145,6 +145,8 @@
             </div>
 
             <h2>Form validation</h2>
+            
+            <h3>Using inners &lt;select&gt;</h3>
             <script type="text/javascript">
                 app.controller('formValidationCtrl', function ($scope) {
 
@@ -177,6 +179,22 @@
                             <td>{{ myForm.formv_year.$dirty? 'Yes' : 'No' }}</td>
                         </tr>
                     </table>
+                </form>
+            </div>
+
+            <h3>Using ngRequired and name</h3>
+            <script type="text/javascript">
+                app.controller('requiredCtrl', function ($scope) {
+
+                });
+            </script>
+            <div ng-controller="requiredCtrl">
+                <form name="myOtherForm" novalidate>
+                    <p>Choose a date: <ng-combo-date-picker ng-model="requiredDate" ng-required="true" name="my_date"></ng-combo-date-picker></p>
+                    <p>Current selection is: <strong>{{ requiredDate }}</strong></p>
+                    <p>Date selector is dirty: <strong>{{ myOtherForm.my_date.$dirty? 'Yes' : 'No' }}</strong></p>
+                    <p>Date selector is valid: <strong>{{ myOtherForm.my_date.$invalid? 'No' : 'Yes' }}</strong></p>
+                    <p>Form is valid: <strong>{{ myOtherForm.$invalid? 'No' : 'Yes' }}</strong></p>
                 </form>
             </div>
             
