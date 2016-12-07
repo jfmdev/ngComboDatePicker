@@ -338,7 +338,9 @@ $scope.max = new Date('2016-09-07');</code></pre>
                     
                     <h3>Form validation</h3>
                     
-                    <p>If you want to use the form validation features of Angular, you can use the attributes <code>ng-attrs-date</code>, <code>ng-attrs-month</code> and <code>ng-attrs-year</code> in order to define the <code>name</code> attribute of each combo box.</p>
+                    <p>If you want to use the form validation features of Angular, you have two alternatives:</p>
+                    
+                    <p>You can use the attributes <code>ng-attrs-date</code>, <code>ng-attrs-month</code> and <code>ng-attrs-year</code> in order to define the <code>name</code> attribute of each combo box.</p>
                     
                     <div class="row">
                         <div class="col-sm-8">
@@ -355,6 +357,24 @@ $scope.max = new Date('2016-09-07');</code></pre>
                             </form>
                         </div>
                     </div>
+                    
+                    <p>Or you can use the attributes <code>ng-required</code> and <code>name</code> on the directive itself.</p>
+                    
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <pre><code class="html">&lt;form name=&quot;myOtherForm&quot; novalidate&gt;
+    &lt;ng-combo-date-picker ng-model=&quot;requiredDate&quot; name=&quot;myDate&quot; ng-required=&quot;true&quot;&gt;&lt;/ng-combo-date-picker&gt;
+&lt;/form&gt;</code></pre>
+                        </div>
+                        <div class="col-sm-4 demo">
+                            <form name="myOtherForm" novalidate>
+                                <p><ng-combo-date-picker ng-model="requiredDate" ng-required="true" name="myDate"></ng-combo-date-picker></p>
+                                <p><code>myDate.$pristine</code>: <strong>{{ myOtherForm.myDate.$pristine? 'true' : 'false' }}</strong></p>
+                                <p><code>myDate.$dirty</code>: <strong>{{ myOtherForm.myDate.$dirty? 'true' : 'false' }}</strong></p>
+                                <p><code>myDate.$valid</code>: <strong>{{ myOtherForm.myDate.$valid? 'true' : 'false' }}</strong></p>
+                            </form>
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>
