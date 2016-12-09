@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.3.0
+ * ngComboDatePicker v1.3.1
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -49,6 +49,11 @@ angular.module("ngComboDatePicker", [])
         return res;
     };
 
+    // Function to parse an string returning either a number or 'null' (instead of NaN).
+    function parseIntStrict(num) {
+        return (num !== null && num !== '' && parseInt(num) != NaN)? parseInt(num) : null;
+    };
+    
     // Function to parse a JSON object.
     function parseJsonPlus(jsonObj) {
         var res = null;
@@ -153,10 +158,13 @@ angular.module("ngComboDatePicker", [])
             }
             
             // Update list of months.
-            $scope.updateMonthList = function() {
+            $scope.updateMonthList = function(year) {
+                // Parse parameter.
+                year = parseIntStrict(year);
+
                 // Some months can not be choosed if the year matchs with the year of the minimum or maximum dates.
-                var start = $scope.ngModel != null && $scope.ngModel.getFullYear() == $scope.minDate.getFullYear()? $scope.minDate.getMonth() : 0;
-                var end = $scope.ngModel != null && $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()? $scope.maxDate.getMonth() : 11;
+                var start = year !== null && year == $scope.minDate.getFullYear()? $scope.minDate.getMonth() : 0;
+                var end = year !== null && year == $scope.maxDate.getFullYear()? $scope.maxDate.getMonth() : 11;
 
                 // Generate list.
                 $scope.months = [];
@@ -167,16 +175,22 @@ angular.module("ngComboDatePicker", [])
             };
 
             // Initialize list of days.
-            $scope.updateDateList = function() {
+            $scope.updateDateList = function(month, year) {
+                // Parse parameters.
+                month = parseIntStrict(month);
+                year = parseIntStrict(year);
+                
                 // Start date is 1, unless the selected month and year matchs the minimum date.
                 var start = 1;
-                if($scope.ngModel != null && $scope.ngModel.getMonth() == $scope.minDate.getMonth() && $scope.ngModel.getFullYear() == $scope.minDate.getFullYear()) {
+                if(month !== null && month == $scope.minDate.getMonth() && 
+                   year !== null && year == $scope.minDate.getFullYear()) {
                     start = $scope.minDate.getDate();
                 }
 
                 // End date is 30 or 31 (28 or 29 in February), unless the selected month and year matchs the maximum date.
-                var end = $scope.ngModel != null? maxDate($scope.ngModel.getMonth()+1, $scope.ngModel.getFullYear()) : maxDate(null, null);
-                if($scope.ngModel != null && $scope.ngModel.getMonth() == $scope.maxDate.getMonth() && $scope.ngModel.getFullYear() == $scope.maxDate.getFullYear()) {
+                var end = maxDate(month !== null? (month+1) : null, year);
+                if(month !== null && month == $scope.maxDate.getMonth() && 
+                   year !== null && year == $scope.maxDate.getFullYear()) {
                     end = $scope.maxDate.getDate();
                 }
 
@@ -223,8 +237,8 @@ angular.module("ngComboDatePicker", [])
                 }
 
                 // Hide or show days and months according to the min and max dates.
-                scope.updateMonthList();
-                scope.updateDateList();
+                scope.updateMonthList(res.year);
+                scope.updateDateList(res.month, res.year);
                 return res;
             });
             
@@ -280,8 +294,8 @@ angular.module("ngComboDatePicker", [])
                 }
                 
                 // Hide or show days and months according to the min and max dates.
-                scope.updateMonthList();
-                scope.updateDateList();
+                scope.updateMonthList(viewValue.year);
+                scope.updateDateList(viewValue.month, viewValue.year);
                           
                 return res;
             });
