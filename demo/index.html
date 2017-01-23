@@ -42,6 +42,17 @@
                 <p>Choose a date: <ng-combo-date-picker ng-model="change" ng-order="ymd"></ng-combo-date-picker></p>
                 <p>Current selection is: <strong>{{ change }}</strong><p/>
             </div>
+            <h2>Add classes to combo boxes</h2>
+
+            <script type="text/javascript">
+                app.controller('setClassesCtrl', function ($scope) {
+                    $scope.classes = new Date();
+                });
+            </script>
+            <div ng-controller="setClassesCtrl">
+                <p>Choose a date: <ng-combo-date-picker ng-classes-date="form-control" ng-classes-month="form-control" ng-classes-year="form-control" ng-model="classes"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ classes }}</strong><p/>
+            </div>
 
             
             <h2>Set initial date</h2>
