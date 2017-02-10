@@ -54,9 +54,9 @@ Name | Description
 `ngMaxDate`  | A _string_ representing the maximum date that can be picked. By default the maximum date is the current day.
 `ngMonths`  | A _string_ with the names of the twelve months, separated by comma. 
 `ngOrder`  | A _string_ with the characters "d", "m" and "y" indicating in which order the combo boxes must be displayed. By default, the combo boxes are displayed in the order "dmy".
-`ngAttrsDate`  | A JSON object with the attributes to add to the `select` element for the date. 
-`ngAttrsMonth`  | A JSON object with the attributes to add to the `select` element for the month. 
-`ngAttrsYear`  | A JSON object with the attributes to add to the `select` element for the year. 
+`ngAttrsDate`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the date. 
+`ngAttrsMonth`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the month. 
+`ngAttrsYear`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the year. 
 `ngYearOrder`  | A _string_ indicating if the years must be sorted in "ascending" or "descending" order. 
 `ngTimezone`  | A _number_ indicating the timezone to be used when converting a string or an integer to a date. By default the timezone of the client is used. 
 `ngPlaceholder`  | A _string_ with the placeholders for the year, month and date combo boxes (in that order), separated by comma. 
