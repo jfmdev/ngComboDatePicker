@@ -253,7 +253,7 @@ $scope.max = new Date('2016-09-07');</code></pre>
                     
                     <h3>Add attributes</h3>
 
-                    <p>You can add attributes to each element by using the attributes <code>ng-attrs-date</code>, <code>ng-attrs-month</code> and <code>ng-attrs-year</code>.</p>
+                    <p>You can add attributes to each element (such as the <code>style</code> or the <code>class</code>) by using the attributes <code>ng-attrs-date</code>, <code>ng-attrs-month</code> and <code>ng-attrs-year</code>.</p>
 
                     <script type="text/javascript">
                         app.controller('myCtrlAttrs', function ($scope) {
@@ -269,6 +269,21 @@ $scope.max = new Date('2016-09-07');</code></pre>
                         </div>
                     </div>
                     
+                    <script type="text/javascript">
+                        app.controller('myCtrlClasses', function ($scope) {
+                            $scope.classes = new Date();
+                        });
+                    </script>
+                    <div class="row" ng-controller="myCtrlClasses">
+                        <div class="col-sm-8">
+                            <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;classes&quot; ng-attrs-date='{&quot;class&quot;: &quot;form-control&quot;}' ng-attrs-month='{&quot;class&quot;: &quot;form-control&quot;}' ng-attrs-year='{&quot;class&quot;: &quot;form-control&quot;}'&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                        </div>
+                        <div class="col-sm-4 demo">
+                            <form class="form-inline">
+                                <ng-combo-date-picker ng-model="classes" ng-attrs-date='{"class": "form-control"}' ng-attrs-month='{"class": "form-control"}' ng-attrs-year='{"class": "form-control"}'></ng-combo-date-picker>
+                            </form>
+                        </div>
+                    </div>
                     
                     <h3>Set sort order for years</h3>
 
