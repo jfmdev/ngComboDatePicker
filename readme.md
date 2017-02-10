@@ -14,12 +14,14 @@ Usage
 
 In order to use this directive:
 
-**1)** Include the library (located in the `source` folder) in the header of your HTML files, after including Angular (v1.4.0 or greater):
+**1)** Include the library (located in the `source` folder of this repository) in the header of your HTML files, after including Angular (v1.4.0 or greater):
 
 ```html
 <script type="text/javascript" src="angular.min.js"></script>
 <script type="text/javascript" src="ngComboDatePicker.min.js"></script>
 ```
+
+> Note that, instead of cloning this repository, you can also gee this library usins NPM (`npm install ng-combo-date-picker`) or Bower (`bower install ngComboDatePicker`).
 
 **2)** Then add `ngComboDatePicker` as a dependency when declaring your Angular's app:
 

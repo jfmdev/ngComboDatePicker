@@ -103,7 +103,9 @@
             </div>
 
             
-            <h2>Define attributtes</h2>
+            <h2>Define attributtes (for each combobox)</h2>
+            
+            <h3>Styles</h3>
             <script type="text/javascript">
                 app.controller('attributesCtrl', function ($scope) {
                     $scope.attrs = new Date();
@@ -114,6 +116,23 @@
                 <p>Current selection is: <strong>{{ attrs }}</strong><p/>
             </div>
             
+            <h2>Classes</h2>
+ 
+             <script type="text/javascript">
+                 app.controller('classesCtrl', function ($scope) {
+                     $scope.classes = new Date();
+                 });
+             </script>
+             <style type="text/css">
+                .my-class {
+                    color: darkblue;
+                    padding: 3px;
+                }
+             </style>
+             <div ng-controller="classesCtrl">
+                 <p>Choose a date: <ng-combo-date-picker ng-model="classes" ng-attrs-date='{"class": "my-class"}' ng-attrs-month='{"class": "my-class"}' ng-attrs-year='{"class": "my-class"}'></ng-combo-date-picker></p>
+                 <p>Current selection is: <strong>{{ classes }}</strong><p/>
+             </div>
             
             <h2>Change years order</h2>
             <script type="text/javascript">
@@ -135,7 +154,7 @@
                 <p>Current selection is: <strong>{{ timezone2 }}</strong><p/>
                 <p>Choose a date: <ng-combo-date-picker ng-model="timezone3" ng-date="2000-01-01" ng-timezone="10.5"></ng-combo-date-picker></p>
                 <p>Current selection is: <strong>{{ timezone3 }}</strong><p/>
-            </div>        
+            </div>
             
             
             <h2>Place holders</h2>
@@ -198,6 +217,6 @@
                 </form>
             </div>
             
-        </div>        
+        </div>
     </body>
 </html>
