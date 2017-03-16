@@ -80,6 +80,7 @@ angular.module("ngComboDatePicker", [])
             ngYearOrder: '@',
             ngTimezone: '@',
             ngPlaceholder: '@',
+            ngPlaceholderEnabled: '@',
             ngRequired: '@'
         },
         require: 'ngModel',
@@ -287,7 +288,7 @@ angular.module("ngComboDatePicker", [])
                 }
                 
                 // Disable placeholders after selecting a value.
-                if(scope.placeHolders) {
+                if(scope.placeHolders && angular.isUndefined(scope.ngPlaceholderEnabled)) {
                     if(scope.year != '') scope.placeHolders[0].disabled = true;
                     if(scope.month != '') scope.placeHolders[1].disabled = true;
                     if(scope.date != '') scope.placeHolders[2].disabled = true;
