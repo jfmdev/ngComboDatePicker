@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.3.1
+ * ngComboDatePicker v1.3.2
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -18,11 +18,7 @@ angular.module("ngComboDatePicker", [])
                 res = 30;
             }
             if(year != null && month == 2) {
-                res = year % 4 == 0 && year % 100 != 0 ? 29 : 28;
-
-                if(year % 400 == 0) {
-                    res = 29;
-                }
+                res = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)? 29 : 28;
             }
         }
         return res;

@@ -60,6 +60,7 @@ Name | Description
 `ngYearOrder`  | A _string_ indicating if the years must be sorted in "ascending" or "descending" order. 
 `ngTimezone`  | A _number_ indicating the timezone to be used when converting a string or an integer to a date. By default the timezone of the client is used. 
 `ngPlaceholder`  | A _string_ with the placeholders for the year, month and date combo boxes (in that order), separated by comma. 
+`ngPlaceholderEnabled`  | A _boolean_ that allows to enable or disable the placeholder at runtime. 
 `ngRequired`  | A _boolean_ indicating if the component should be considered invalid if any of his combo boxes is empty. 
 
 License
