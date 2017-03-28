@@ -18,7 +18,11 @@ angular.module("ngComboDatePicker", [])
                 res = 30;
             }
             if(year != null && month == 2) {
-                res = year % 4 == 0 && year % 100 != 0? 29 : 28;
+                res = year % 4 == 0 && year % 100 != 0 ? 29 : 28;
+
+                if(year % 400 == 0) {
+                    res = 29;
+                }
             }
         }
         return res;
@@ -106,7 +110,7 @@ angular.module("ngComboDatePicker", [])
 
             // Initialize minimal and maximum values.
             $scope.minDate = parseDate($scope.ngMinDate, $scope.ngTimezone);
-            if($scope.ngMinDate == null) {
+            if($scope.minDate == null) {
                 var now = new Date();
                 $scope.minDate = new Date(now.getFullYear()-100, now.getMonth(), now.getDate(),
                                           now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
