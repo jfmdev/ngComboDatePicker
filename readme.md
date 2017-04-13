@@ -57,6 +57,9 @@ Name | Description
 `ngAttrsDate`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the date. 
 `ngAttrsMonth`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the month. 
 `ngAttrsYear`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the year. 
+`ngDisabledDate`  | An _expression_ indicating if the component date select should be rendered as disabled. 
+`ngDisabledMonth`  | An _expression_ indicating if the component month select should be rendered as disabled. 
+`ngDisabledYear`  | An _expression_ indicating if the component year select should be rendered as disabled. 
 `ngYearOrder`  | A _string_ indicating if the years must be sorted in "ascending" or "descending" order. 
 `ngTimezone`  | A _number_ indicating the timezone to be used when converting a string or an integer to a date. By default the timezone of the client is used. 
 `ngPlaceholder`  | A _string_ with the placeholders for the year, month and date combo boxes (in that order), separated by comma. 

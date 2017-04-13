@@ -77,6 +77,9 @@ angular.module("ngComboDatePicker", [])
             ngAttrsDate: '@',
             ngAttrsMonth: '@',
             ngAttrsYear: '@',
+            ngDisabledDate: '=',
+            ngDisabledMonth: '=',
+            ngDisabledYear: '=',
             ngYearOrder: '@',
             ngTimezone: '@',
             ngPlaceholder: '@',
@@ -326,9 +329,9 @@ angular.module("ngComboDatePicker", [])
 
             // Generate HTML code.
             var html =
-                '<select ng-model="date" '+strAttrs[0]+' ng-options="date.value as date.name disable when date.disabled for date in dates"></select>' +
-                '<select ng-model="month" '+strAttrs[1]+' ng-options="month.value as month.name disable when month.disabled for month in months"></select>' +
-                '<select ng-model="year" '+strAttrs[2]+' ng-options="year.value as year.name disable when year.disabled for year in years"></select>'
+                '<select ng-disabled="ngDisabledDate" ng-model="date" '+strAttrs[0]+' ng-options="date.value as date.name disable when date.disabled for date in dates"></select>' +
+                '<select ng-disabled="ngDisabledMonth" ng-model="month" '+strAttrs[1]+' ng-options="month.value as month.name disable when month.disabled for month in months"></select>' +
+                '<select ng-disabled="ngDisabledYear" ng-model="year" '+strAttrs[2]+' ng-options="year.value as year.name disable when year.disabled for year in years"></select>'
             ;
 
             return html;
