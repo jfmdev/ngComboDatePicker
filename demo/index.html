@@ -217,6 +217,24 @@
                 </form>
             </div>
             
+            <h2>Disable combo boxes</h2>
+            
+            <h3>Disable all</h3>
+            
+            <div>
+                <p>Choose a date: <ng-combo-date-picker ng-model="disableBoxes1" ng-disabled="disableFlag"></ng-combo-date-picker></p>
+                <p><input type="checkbox" ng-model="disableFlag"/> Disable combo boxes</p>
+            </div>
+            
+            <h3>Disable one by one</h3>
+            
+            <div ng-init="disableFlags = [false, false, false]">
+                <p>Choose a date: <ng-combo-date-picker ng-model="disableBoxes2" ng-disabled="disableFlags"></ng-combo-date-picker></p>
+                <p><input type="checkbox" ng-model="disableFlags[0]"/> Disable date</p>
+                <p><input type="checkbox" ng-model="disableFlags[1]"/> Disable month</p>
+                <p><input type="checkbox" ng-model="disableFlags[2]"/> Disable year</p>
+            </div>
+                        
         </div>
     </body>
 </html>
