@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.4.0
+ * ngComboDatePicker v1.4.1
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -204,6 +204,7 @@ angular.module("ngComboDatePicker", [])
                 }
             };
         } ],
+        
         link: function(scope, element, attrs, ngModelCtrl) {
             // Initialize variables.
             var jqLite = angular.element;
@@ -251,7 +252,7 @@ angular.module("ngComboDatePicker", [])
                 scope.year  = ngModelCtrl.$viewValue.year;
             };
             
-            // Set watch function.
+            // Set watch function for update the view value.
             scope.$watch('date + "-" + month + "-" + year', function(newValue, oldValue) {
                 if(newValue != oldValue) {
                     ngModelCtrl.$setViewValue({
@@ -301,6 +302,12 @@ angular.module("ngComboDatePicker", [])
                           
                 return res;
             });
+            
+            // Method called when one of the combo boxes is touched.
+            scope.touched = function() {
+                ngModelCtrl.$touched = true;
+                ngModelCtrl.$untouched = false;
+            };
         },
         template: function(element, attrs) {
             // Verify if addtional attributes were defined.
@@ -327,9 +334,9 @@ angular.module("ngComboDatePicker", [])
 
             // Generate HTML code.
             var html =
-                '<select ng-disabled="ngDisabled === true || ngDisabled[0] === true" ng-model="date" '+strAttrs[0]+' ng-options="date.value as date.name disable when date.disabled for date in dates"></select>' +
-                '<select ng-disabled="ngDisabled === true || ngDisabled[1] === true" ng-model="month" '+strAttrs[1]+' ng-options="month.value as month.name disable when month.disabled for month in months"></select>' +
-                '<select ng-disabled="ngDisabled === true || ngDisabled[2] === true" ng-model="year" '+strAttrs[2]+' ng-options="year.value as year.name disable when year.disabled for year in years"></select>'
+                '<select ng-disabled="ngDisabled === true || ngDisabled[0] === true" ng-model="date" ng-blur="touched()" '+strAttrs[0]+' ng-options="date.value as date.name disable when date.disabled for date in dates"></select>' +
+                '<select ng-disabled="ngDisabled === true || ngDisabled[1] === true" ng-model="month" ng-blur="touched()" '+strAttrs[1]+' ng-options="month.value as month.name disable when month.disabled for month in months"></select>' +
+                '<select ng-disabled="ngDisabled === true || ngDisabled[2] === true" ng-model="year" ng-blur="touched()" '+strAttrs[2]+' ng-options="year.value as year.name disable when year.disabled for year in years"></select>'
             ;
 
             return html;

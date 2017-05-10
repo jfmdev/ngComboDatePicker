@@ -181,21 +181,29 @@
                             <th>Field</th>
                             <th>Pristine</th>
                             <th>Dirty</th>
+                            <th>Touched</th>
+                            <th>Untouched</th>
                         </tr>
                         <tr>
                             <td>Date</td>
                             <td>{{ myForm.formv_date.$pristine? 'Yes' : 'No' }}</td>
                             <td>{{ myForm.formv_date.$dirty? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_date.$touched? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_date.$untouched? 'Yes' : 'No' }}</td>
                         </tr>
                         <tr>
                             <td>Month</td>
                             <td>{{ myForm.formv_month.$pristine? 'Yes' : 'No' }}</td>
                             <td>{{ myForm.formv_month.$dirty? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_month.$touched? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_month.$untouched? 'Yes' : 'No' }}</td>
                         </tr>
                         <tr>
                             <td>Year</td>
                             <td>{{ myForm.formv_year.$pristine? 'Yes' : 'No' }}</td>
                             <td>{{ myForm.formv_year.$dirty? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_year.$touched? 'Yes' : 'No' }}</td>
+                            <td>{{ myForm.formv_year.$untouched? 'Yes' : 'No' }}</td>
                         </tr>
                     </table>
                 </form>
@@ -213,6 +221,7 @@
                     <p>Current selection is: <strong>{{ requiredDate }}</strong></p>
                     <p>Date selector is dirty: <strong>{{ myOtherForm.my_date.$dirty? 'Yes' : 'No' }}</strong></p>
                     <p>Date selector is valid: <strong>{{ myOtherForm.my_date.$invalid? 'No' : 'Yes' }}</strong></p>
+                    <p>Date selector was touched: <strong>{{ myOtherForm.my_date.$touched? 'Yes' : 'No' }}</strong></p>
                     <p>Form is valid: <strong>{{ myOtherForm.$invalid? 'No' : 'Yes' }}</strong></p>
                 </form>
             </div>
