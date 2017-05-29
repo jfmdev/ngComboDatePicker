@@ -1,6 +1,6 @@
 {
   "name": "ng-combo-date-picker",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "An Angular directive to select dates using combo boxes",
   "main": "source/ngComboDatePicker.js",
   "scripts": {
@@ -28,6 +28,6 @@
   "homepage": "http://jfmdev.github.io/ngComboDatePicker/",
   "devDependencies": {
     "uglify-save-license": "^0.4.1",
-    "uglifyjs": "^2.4.10"
+    "uglify-js": "^2.4.10"
   }
 }

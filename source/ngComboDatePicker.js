@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.4.1
+ * ngComboDatePicker v1.5.0
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -72,23 +72,27 @@ angular.module("ngComboDatePicker", [])
             ngDate : '@',
             ngMinDate : '@',
             ngMaxDate : '@',
+            ngMinModel : '=?',
+            ngMaxModel : '=?',
             ngMonths : '@',
+            ngTimezone: '@',
             ngOrder: '@',
             ngAttrsDate: '@',
             ngAttrsMonth: '@',
             ngAttrsYear: '@',
-            ngDisabled: '=',
+            ngDisabled: '=?',
             ngYearOrder: '@',
-            ngTimezone: '@',
             ngPlaceholder: '@',
             ngPlaceholderEnabled: '@',
             ngRequired: '@'
         },
         require: 'ngModel',
         controller: ['$scope', function($scope) {
-            // Initialize model.  
+            // Initialize models.
             $scope.ngModel = parseDate($scope.ngModel, $scope.ngTimezone);
-
+            $scope.ngMinModel = parseDate($scope.ngMinModel, $scope.ngTimezone);
+            $scope.ngMaxModel = parseDate($scope.ngMaxModel, $scope.ngTimezone);
+            
             // Initialize attributes variables.
             $scope.ngAttrsDate = parseJsonPlus($scope.ngAttrsDate);
             $scope.ngAttrsMonth = parseJsonPlus($scope.ngAttrsMonth);
@@ -106,20 +110,44 @@ angular.module("ngComboDatePicker", [])
             }
 
             // Initialize minimal and maximum values.
-            $scope.minDate = parseDate($scope.ngMinDate, $scope.ngTimezone);
-            if($scope.minDate == null) {
+            if($scope.ngMinDate) {
+                $scope.ngMinModel = parseDate($scope.ngMinDate, $scope.ngTimezone);
+            }
+            if(!$scope.ngMinModel) {
                 var now = new Date();
-                $scope.minDate = new Date(now.getFullYear()-100, now.getMonth(), now.getDate(),
+                $scope.ngMinModel = new Date(now.getFullYear()-100, now.getMonth(), now.getDate(),
                                           now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
             }
-            $scope.maxDate = parseDate($scope.ngMaxDate, $scope.ngTimezone);
-            if($scope.maxDate == null) {
-                $scope.maxDate = new Date();
+            if($scope.ngMaxDate) {
+                $scope.ngMaxModel = parseDate($scope.ngMaxDate, $scope.ngTimezone);
+            }
+            if(!$scope.ngMaxModel) {
+                $scope.ngMaxModel = new Date();
             }
 
-            // Verify if selected date is in the valid range.
-            if($scope.ngModel < $scope.minDate) $scope.ngModel = $scope.minDate;
-            if($scope.ngModel > $scope.maxDate) $scope.ngModel = $scope.maxDate;
+            // Watch for changes in the minimum and maximum dates.
+            $scope.$watch('[ngMinModel, ngMaxModel]', function() {
+                // Update list of years (if possible).
+                if($scope.ngMinModel && $scope.ngMaxModel) {
+                    // Get list of years.
+                    $scope.years = [];
+                    for(var i=$scope.ngMinModel.getFullYear(); i<=$scope.ngMaxModel.getFullYear(); i++) {
+                        $scope.years.push({value:i, name:i});
+                    }
+
+                    // Verify if the order of the years must be reversed.
+                    if(typeof $scope.ngYearOrder == 'string' && $scope.ngYearOrder.indexOf('des') == 0) {
+                        $scope.years.reverse();
+                    }
+
+                    // Prepend the years placeholder
+                    if($scope.placeHolders) $scope.years.unshift($scope.placeHolders[0]);
+                }
+                
+                // Verify if selected date is in the valid range.
+                if($scope.ngMinModel &&$scope.ngModel < $scope.ngMinModel) $scope.ngModel = $scope.ngMinModel;
+                if($scope.ngMaxModel && $scope.ngModel > $scope.ngMaxModel) $scope.ngModel = $scope.ngMaxModel;
+            });
 
             // Initialize place holders.
             $scope.placeHolders = null;
@@ -132,20 +160,6 @@ angular.module("ngComboDatePicker", [])
                     }
                 }
             }
-
-            // Initialize list of years.
-            $scope.years = [];
-            for(var i=$scope.minDate.getFullYear(); i<=$scope.maxDate.getFullYear(); i++) {
-                $scope.years.push({value:i, name:i});
-            }
-
-            // Verify if the order of the years must be reversed.
-            if(typeof $scope.ngYearOrder == 'string' && $scope.ngYearOrder.indexOf('des') == 0) {
-                $scope.years.reverse();
-            }
-
-            // Prepend the years placeholder
-            if($scope.placeHolders) $scope.years.unshift($scope.placeHolders[0]);
 
             // Initialize list of months names.
             var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -165,8 +179,8 @@ angular.module("ngComboDatePicker", [])
                 year = parseIntStrict(year);
 
                 // Some months can not be choosed if the year matchs with the year of the minimum or maximum dates.
-                var start = year !== null && year == $scope.minDate.getFullYear()? $scope.minDate.getMonth() : 0;
-                var end = year !== null && year == $scope.maxDate.getFullYear()? $scope.maxDate.getMonth() : 11;
+                var start = year !== null && year == $scope.ngMinModel.getFullYear()? $scope.ngMinModel.getMonth() : 0;
+                var end = year !== null && year == $scope.ngMaxModel.getFullYear()? $scope.ngMaxModel.getMonth() : 11;
 
                 // Generate list.
                 $scope.months = [];
@@ -184,16 +198,16 @@ angular.module("ngComboDatePicker", [])
                 
                 // Start date is 1, unless the selected month and year matchs the minimum date.
                 var start = 1;
-                if(month !== null && month == $scope.minDate.getMonth() && 
-                   year !== null && year == $scope.minDate.getFullYear()) {
-                    start = $scope.minDate.getDate();
+                if(month !== null && month == $scope.ngMinModel.getMonth() && 
+                   year !== null && year == $scope.ngMinModel.getFullYear()) {
+                    start = $scope.ngMinModel.getDate();
                 }
 
                 // End date is 30 or 31 (28 or 29 in February), unless the selected month and year matchs the maximum date.
                 var end = maxDate(month !== null? (month+1) : null, year);
-                if(month !== null && month == $scope.maxDate.getMonth() && 
-                   year !== null && year == $scope.maxDate.getFullYear()) {
-                    end = $scope.maxDate.getDate();
+                if(month !== null && month == $scope.ngMaxModel.getMonth() && 
+                   year !== null && year == $scope.ngMaxModel.getFullYear()) {
+                    end = $scope.ngMaxModel.getDate();
                 }
 
                 // Generate list.

@@ -49,17 +49,19 @@ The _ngComboDatePicker_ directive supports the following attributes:
 Name | Description
 ------------- | ----
 `ngModel`  | (mandatory) A _Date_ object in which the picked date is going to be stored. This attribute can also be used to define the initial value of the picker.
-`ngDate`  | A string representing the initial date of the picker.
-`ngMinDate`  | A _string_ representing the minimum date that can be picked. By default the minimum date is 100 years before the current day.
-`ngMaxDate`  | A _string_ representing the maximum date that can be picked. By default the maximum date is the current day.
+`ngDate`  | A _string_ representing the initial date of the picker. Note that this value is read only once, when loading the component, so if you plan to change this value dynamically, then you should use the attribute `ngModel` instead.
+`ngMinDate`  | A _string_ representing the minimum date that can be picked. By default the minimum date is 100 years before the current date. Note that this value is read only once, when loading the component, so if you plan to change this value dynamically, then you should use the attribute `ngMinModel` instead.
+`ngMaxDate`  | A _string_ representing the maximum date that can be picked. By default the maximum date is the current date. Note that this value is read only once, when loading the component, so if you plan to change this value dynamically, then you should use the attribute `ngMaxModel` instead.
+`ngMinModel`  | A _Date_ object indicating the minimum date that can be picked. By default the minimum date is 100 years before the current date.
+`ngMaxModel`  | A _Date_ object indicating the maximum date that can be picked. By default the maximum date is the current date.
+`ngTimezone`  | A _number_ indicating the timezone to be used when converting a string or an integer to a date. By default the timezone of the client is used. 
 `ngMonths`  | A _string_ with the names of the twelve months, separated by comma. 
 `ngOrder`  | A _string_ with the characters "d", "m" and "y" indicating in which order the combo boxes must be displayed. By default, the combo boxes are displayed in the order "dmy".
-`ngAttrsDate`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the date. 
-`ngAttrsMonth`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the month. 
-`ngAttrsYear`  | A JSON object with the attributes (such as `class` or `style`) to add to the `select` element for the year. 
+`ngAttrsDate`  | A _JSON_ object with the attributes (such as `class` or `style`) to add to the `select` element for the date. 
+`ngAttrsMonth`  | A _JSON_ object with the attributes (such as `class` or `style`) to add to the `select` element for the month. 
+`ngAttrsYear`  | A _JSON_ object with the attributes (such as `class` or `style`) to add to the `select` element for the year. 
 `ngDisabled`  | A _boolean_, or an _array_ of three booleans, indicating if the combo boxes should be rendered as disabled. 
 `ngYearOrder`  | A _string_ indicating if the years must be sorted in "ascending" or "descending" order. 
-`ngTimezone`  | A _number_ indicating the timezone to be used when converting a string or an integer to a date. By default the timezone of the client is used. 
 `ngPlaceholder`  | A _string_ with the placeholders for the year, month and date combo boxes (in that order), separated by comma. 
 `ngPlaceholderEnabled`  | A _boolean_ that allows to enable or disable the placeholder at runtime. 
 `ngRequired`  | A _boolean_ indicating if the component should be considered invalid if any of his combo boxes is empty. 

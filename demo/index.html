@@ -80,6 +80,9 @@
 
             
             <h2>Define minimum and maximum dates</h2>
+            
+            
+            <h3>Statically</h3>
             <script type="text/javascript">
                 app.controller('minAndMaxCtrl', function ($scope) {
                     $scope.range = new Date();
@@ -90,6 +93,23 @@
                 <p>Current selection is: <strong>{{ range }}</strong><p/>
             </div>
 
+            
+            <h3>Dynamically</h3>
+            <script type="text/javascript">
+                app.controller('minAndMaxDynCtrl', function ($scope) {
+                    var now = new Date();
+                    $scope.dyn_range = new Date();
+                    $scope.dyn_min = new Date(now.getTime() - 5*365*24*60*60*1000);
+                    $scope.dyn_max = new Date(now.getTime() - 1*365*24*60*60*1000);
+                });
+            </script>
+            <div ng-controller="minAndMaxDynCtrl">
+                <p>Minimum date: <ng-combo-date-picker ng-model="dyn_min"></ng-combo-date-picker></p>
+                <p>Maximum date: <ng-combo-date-picker ng-model="dyn_max"></ng-combo-date-picker></p>
+                <p>Choose a date: <ng-combo-date-picker ng-model="dyn_range" ng-min-model="dyn_min" ng-max-model="dyn_max"></ng-combo-date-picker></p>
+                <p>Current selection is: <strong>{{ dyn_range }}</strong><p/>
+            </div>
+            
             
             <h2>Change strings for months</h2>
             <script type="text/javascript">
@@ -116,7 +136,7 @@
                 <p>Current selection is: <strong>{{ attrs }}</strong><p/>
             </div>
             
-            <h2>Classes</h2>
+            <h3>Classes</h3>
  
              <script type="text/javascript">
                  app.controller('classesCtrl', function ($scope) {

@@ -1,6 +1,6 @@
 // Load dependencies.
 const fs = require('fs');
-const UglifyJS = require('uglifyjs');
+const UglifyJS = require('uglify-js');
 const SaveLicense = require('uglify-save-license');
 
 // Minify code.
