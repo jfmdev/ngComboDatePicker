@@ -202,10 +202,10 @@
                 <div class="col-sm-8">
                     <pre class="friendly"><code class="javascript">$scope.min = new Date('2014-09-07');
 $scope.max = new Date('2016-09-07');</code></pre>
-                    <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;range2&quot; ng-min-date=&quot;{{ var='{'+'{ min.toString() }'+'}'; }}&quot; ng-max-date=&quot;{{ var='{'+'{ max.toString() }'+'}'; }}&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
+                    <pre><code class="html">&lt;ng-combo-date-picker ng-model=&quot;range2&quot; ng-min-model=&quot;min&quot; ng-max-model=&quot;max&quot;&gt;&lt;/ng-combo-date-picker&gt;</code></pre>
                 </div>
                 <div class="col-sm-4 demo">
-                    <ng-combo-date-picker ng-model="range2" ng-min-date="{{ min.toString() }}" ng-max-date="{{ max.toString() }}"></ng-combo-date-picker>
+                    <ng-combo-date-picker ng-model="range2" ng-min-model="min" ng-max-model="max"></ng-combo-date-picker>
                 </div>
             </div>
 
