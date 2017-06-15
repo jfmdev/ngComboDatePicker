@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.5.0
+ * ngComboDatePicker v1.5.1
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -145,8 +145,8 @@ angular.module("ngComboDatePicker", [])
                 }
                 
                 // Verify if selected date is in the valid range.
-                if($scope.ngMinModel &&$scope.ngModel < $scope.ngMinModel) $scope.ngModel = $scope.ngMinModel;
-                if($scope.ngMaxModel && $scope.ngModel > $scope.ngMaxModel) $scope.ngModel = $scope.ngMaxModel;
+                if($scope.ngModel && $scope.ngMinModel && $scope.ngModel < $scope.ngMinModel) $scope.ngModel = $scope.ngMinModel;
+                if($scope.ngModel && $scope.ngMaxModel && $scope.ngModel > $scope.ngMaxModel) $scope.ngModel = $scope.ngMaxModel;
             });
 
             // Initialize place holders.
