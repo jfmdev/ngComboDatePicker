@@ -3,11 +3,12 @@ ngComboDatePicker
 
 _Select dates with combo boxes_
 
-**ngComboDatePicker** is an Angular directive to select dates using combo boxes.
+**ngComboDatePicker** is an AngularJS directive to select dates using combo boxes.
 
 [See the live demos and read the docs](http://jfmdev.github.io/ngComboDatePicker/ "ngComboDatePicker - Live demos and docs")
 
-> If you use the React library, you should check [reactComboDatePicker](https://github.com/jfmdev/reactComboDatePicker), a fork of this project that uses React instead of Angular.
+> If you use the React library, you should check [reactComboDatePicker](https://github.com/jfmdev/reactComboDatePicker), a fork of this project that uses React instead of Angular.  
+> And if you use Angular 4+ (current directive works only on Angular 1.x), you should check [ngx-combo-datepicker](https://github.com/katafractari/ngx-combo-datepicker).
 
 Usage
 -----
