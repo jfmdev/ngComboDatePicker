@@ -1,5 +1,5 @@
 /*
- * ngComboDatePicker v1.5.1
+ * ngComboDatePicker v1.6.0
  * http://github.com/jfmdev/ngComboDatePicker
  * «Copyright 2015 Jose F. Maldonado»
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -84,7 +84,8 @@ angular.module("ngComboDatePicker", [])
             ngYearOrder: '@',
             ngPlaceholder: '@',
             ngPlaceholderEnabled: '@',
-            ngRequired: '@'
+            ngRequired: '@',
+            ngChange: '='
         },
         require: 'ngModel',
         controller: ['$scope', function($scope) {
@@ -217,6 +218,13 @@ angular.module("ngComboDatePicker", [])
                     $scope.dates.push({value:i, name:i});
                 }
             };
+
+            // Listen on changes on ngModel for trigger ngChange event.
+            $scope.$watch('ngModel', function(newValue, oldValue) {
+                if(newValue !== oldValue && $scope.ngChange) {
+                    $scope.ngChange(newValue, oldValue);
+                }
+            });
         } ],
         
         link: function(scope, element, attrs, ngModelCtrl) {
