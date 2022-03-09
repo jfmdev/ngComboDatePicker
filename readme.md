@@ -1,3 +1,5 @@
+> **Notice:** this project has been archived due to AngularJS reaching end of life.
+
 ngComboDatePicker
 =================
 
